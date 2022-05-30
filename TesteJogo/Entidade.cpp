@@ -47,3 +47,11 @@ void Entidade::setPosY(float pY) {
 sf::RectangleShape* Entidade::getCorpo(){
 	return corpo;
 }
+float Entidade::getCentroX() {
+	float centroX = posX + tamX / 2.f;
+	return centroX;
+}
+float Entidade::getCentroY() {
+	float centroY = posY + tamY / 2.f;
+	return centroY;
+}

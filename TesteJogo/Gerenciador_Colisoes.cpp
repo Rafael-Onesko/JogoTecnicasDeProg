@@ -16,16 +16,18 @@ void Gerenciador_Colisoes::verificarColisoes() {
 	float somaTamanhoY;
 	Entidade* ent = nullptr;
 	Entidade* entOutro = nullptr;
-	for (int i = 0; i < (listaEntidades->getTam() - 1); i++) {
-		ent = (*listaEntidades)[i];
-		entOutro = (*listaEntidades)[i + 1];
-		distanciaCentroX = ent->getPosX() - entOutro->getPosX();
-		distanciaCentroY = ent->getPosY() - entOutro->getPosY();
-		somaTamanhoX = (ent->getTamX()) / 2 + (entOutro->getTamX()) / 2;
-		somaTamanhoY = (ent->getTamX()) / 2 + (entOutro->getTamX()) / 2;
-		if (fabs(distanciaCentroX) < somaTamanhoX && fabs(distanciaCentroY) < somaTamanhoY) {
-			ent->colidir(entOutro->getId(), somaTamanhoX - fabs(distanciaCentroX), somaTamanhoY - fabs(distanciaCentroY));
-			entOutro->colidir(ent->getId(), somaTamanhoX - fabs(distanciaCentroX), somaTamanhoY - fabs(distanciaCentroX));
+	for (int i = 0; i < listaEntidades->getTam(); i++) {
+		for (int j = 0; j < listaEntidades->getTam(); j++) {
+			ent = (*listaEntidades)[i];
+			entOutro = (*listaEntidades)[j];
+			distanciaCentroX = fabs(ent->getCentroX() - entOutro->getCentroX());
+			distanciaCentroY = fabs(ent->getCentroY() - entOutro->getCentroY());
+			somaTamanhoX = ((ent->getTamX()) / 2.f) + ((entOutro->getTamX()) / 2.f);
+			somaTamanhoY = ((ent->getTamX()) / 2.f) + ((entOutro->getTamX()) / 2.f);
+			if (distanciaCentroX < somaTamanhoX && distanciaCentroY < somaTamanhoY) {
+				ent->colidir(entOutro->getId(), somaTamanhoX - distanciaCentroX, somaTamanhoY - distanciaCentroY);
+				entOutro->colidir(ent->getId(), somaTamanhoX - distanciaCentroX, somaTamanhoY - distanciaCentroX);
+			}
 		}
 	}
 }

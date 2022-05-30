@@ -28,13 +28,27 @@
      }
      void Jogador::colidir(int IdOutro, float colisaoX, float colisaoY) {
          bool colidX = false, colidY = false;
-         if (colisaoY > colisaoX)
+         if (colisaoX > colisaoY)
              colidY = true;
          else
              colidX = true;
          switch (IdOutro) {
          case 2://Obstaculo
-             if (colisaoX) {
+             if (colidX) {
+                 if (direcaoDireita)
+                     this->setPosX(posX - colisaoX);
+                 else
+                     this->setPosX(posX + colisaoX);
+             }
+             else {
+                 if (!direcaoCima)
+                     this->setPosY(posY - colisaoY);
+                 else
+                     this->setPosY(posY + colisaoY);
+             }
+             break;
+         case 3://Inimigo
+             if (colidX) {
                  if (direcaoDireita)
                      this->setPosX(posX - colisaoX);
                  else

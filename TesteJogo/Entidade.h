@@ -21,6 +21,8 @@ public:
     float getPosY();
     void setPosX(float pX);
     void setPosY(float pY);
+    float getCentroX();
+    float getCentroY();
     sf::RectangleShape* getCorpo();
     virtual void colidir(int IdOutro, float colisaoX, float colisaoY) = 0;
 };
