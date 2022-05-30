@@ -23,10 +23,10 @@ void Gerenciador_Colisoes::verificarColisoes() {
 			distanciaCentroX = fabs(ent->getCentroX() - entOutro->getCentroX());
 			distanciaCentroY = fabs(ent->getCentroY() - entOutro->getCentroY());
 			somaTamanhoX = ((ent->getTamX()) / 2.f) + ((entOutro->getTamX()) / 2.f);
-			somaTamanhoY = ((ent->getTamX()) / 2.f) + ((entOutro->getTamX()) / 2.f);
+			somaTamanhoY = ((ent->getTamY()) / 2.f) + ((entOutro->getTamY()) / 2.f);
 			if (distanciaCentroX < somaTamanhoX && distanciaCentroY < somaTamanhoY) {
-				ent->colidir(entOutro->getId(), somaTamanhoX - distanciaCentroX, somaTamanhoY - distanciaCentroY);
-				entOutro->colidir(ent->getId(), somaTamanhoX - distanciaCentroX, somaTamanhoY - distanciaCentroX);
+				ent->colidir(entOutro->getId(), fabs(somaTamanhoX - distanciaCentroX),fabs( somaTamanhoY - distanciaCentroY));
+				entOutro->colidir(ent->getId(), fabs(somaTamanhoX - distanciaCentroX), fabs(somaTamanhoY - distanciaCentroY));
 			}
 		}
 	}

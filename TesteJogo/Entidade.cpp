@@ -44,6 +44,12 @@ void Entidade::setPosY(float pY) {
 	this->posY = pY;
 	corpo->setPosition(sf::Vector2f(posX, posY));
 }
+float Entidade::getPosXant() {
+	return posXant;
+}
+float Entidade::getPosYant() {
+	return posYant;
+}
 sf::RectangleShape* Entidade::getCorpo(){
 	return corpo;
 }

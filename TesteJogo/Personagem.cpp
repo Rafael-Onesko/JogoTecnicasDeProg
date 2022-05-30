@@ -1,10 +1,12 @@
 #include "Personagem.h"
 
 Personagem::Personagem(int id, float tX, float tY,float vel) : Entidade(id, tX, tY) {
-	this->velocidadeX = vel;
-	this->velocidadeY = vel;
+	this->velPadrao = vel;
+	this->velocidadeX = 0;
+	this->velocidadeY = 0;
 }
 Personagem::Personagem() : Entidade() {
+	this->velPadrao = 0;
 	this->velocidadeX = 0;
 	this->velocidadeY = 0;
 	direcaoDireita = false;

@@ -82,6 +82,7 @@ public:
 			}
 			return aux->getpInfo();
 		}
+		return nullptr;
 	}
 
 };

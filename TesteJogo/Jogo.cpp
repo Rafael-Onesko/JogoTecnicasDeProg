@@ -5,7 +5,7 @@ using namespace std;
 Jogo::Jogo (){
     entidades = new ListaEntidades;
     player1 = new Jogador(100.f,100.f,0.7f);
-    enemy1 = new Inimigo (50.f, 50.f, 0.7f);
+    enemy1 = new Inimigo (200.f, 50.f, 0.7f);
     enemy1->setPosX(200.f);
     enemy1->setPosY(200.f);
     entidades->push(player1);

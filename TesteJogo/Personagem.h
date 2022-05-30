@@ -5,6 +5,7 @@ class Personagem : public Entidade
 protected:
 		float velocidadeX;
 		float velocidadeY;
+		float velPadrao;
 		bool direcaoDireita;
 		bool direcaoCima;
 public:

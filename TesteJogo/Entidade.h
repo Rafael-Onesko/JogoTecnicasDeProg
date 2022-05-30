@@ -9,6 +9,8 @@ protected:
     float tamY;
     float posX;
     float posY;
+    float posXant;
+    float posYant;
 public:
     Entidade(int id, float tX, float tY);
     Entidade();
@@ -21,6 +23,8 @@ public:
     float getPosY();
     void setPosX(float pX);
     void setPosY(float pY);
+    float getPosXant();
+    float getPosYant();
     float getCentroX();
     float getCentroY();
     sf::RectangleShape* getCorpo();
