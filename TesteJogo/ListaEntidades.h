@@ -9,5 +9,8 @@ public:
 	void push(Entidade* entid);
 	void pop(Entidade* entid);
 	int getTam();
+	Entidade* operator[](int index) {
+		return lE[index];
+	}
 };
 

@@ -1,7 +1,6 @@
 #pragma once
-#include "Entidade.h"
-class Fase :
-	public Entidade
+#include "Ente.h"
+class Fase: public Ente
 {
 };
 

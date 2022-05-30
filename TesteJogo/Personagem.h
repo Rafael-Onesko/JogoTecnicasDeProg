@@ -3,13 +3,19 @@
 class Personagem : public Entidade
 {
 protected:
-		float velocidade;
+		float velocidadeX;
+		float velocidadeY;
+		bool direcaoDireita;
+		bool direcaoCima;
 public:
 	Personagem(int id, float tX, float tY, float vel);
 	Personagem();
 	~Personagem();
-	void setVelocidade(float vel);
-	float getVelocidade();
-
+	void setVelocidadeX(float velX);
+	void setVelocidadeY(float velY);
+	float getVelocidadeX();
+	float getVelocidadeY();
+	bool getDirecaoDireita();
+	bool getDirecaoCima();
 };
 

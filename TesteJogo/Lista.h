@@ -74,6 +74,15 @@ public:
 	int getTam() {
 		return tam;
 	}
+	TIPO* operator[](int index) {
+		if (index < tam) {
+			Elemento<TIPO>* aux = pPrimeiro;
+			for (int i = 0; i < index; i++) {
+				aux = aux->getpProx();
+			}
+			return aux->getpInfo();
+		}
+	}
 
 };
 

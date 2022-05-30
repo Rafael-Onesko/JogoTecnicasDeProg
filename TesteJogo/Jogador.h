@@ -8,4 +8,5 @@ public:
     Jogador();
     ~Jogador();
     void move();
+    void colidir(int IdOutro, float colisaoX, float colisaoY);
 };
