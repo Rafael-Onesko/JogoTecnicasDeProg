@@ -3,10 +3,12 @@
 class Gerenciador_Colisoes
 {
 private:
-	ListaEntidades listaObjetos;
+	ListaEntidades* listaEntidades;
 public:
+	Gerenciador_Colisoes(ListaEntidades* listEnt);
 	Gerenciador_Colisoes();
 	~Gerenciador_Colisoes();
+	void verificarColisoes();
 
 };
 
