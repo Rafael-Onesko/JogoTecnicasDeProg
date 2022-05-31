@@ -3,13 +3,16 @@
 #include "Jogador.h"
 #define GRAVIDADE 0.009
     Jogador::Jogador(float tX, float tY, float vel) :Personagem(1, tX, tY, vel) {
-
+        posXant = 0;
+        posYant = 0;
     }
     Jogador::Jogador():Personagem(){
     }
      Jogador::~Jogador(){
+     
      }
      void Jogador::move() {
+         
          posXant = posX;
          posYant = posY;
          if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
@@ -20,38 +23,41 @@
              direcaoDireita = false;
              velocidadeX = -velPadrao;
          }
-         else
+         else// if (velocidadeY == 0)
              velocidadeX = 0;
          if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-
-             velocidadeY = -velPadrao*2;
-         }
-         else if (posY > 250) {
-             velocidadeY = 0;
+             if(velocidadeY == 0)
+                velocidadeY = -velPadrao*3.7f;
          }
          velocidadeY += (float)GRAVIDADE;
-         if (posY > 250) {
-             this->setPosY(250.f);
-         }
          if (velocidadeY < 0)
              direcaoCima = true;
          else
              direcaoCima = false;
          this->setPosX(posX + velocidadeX);
          this->setPosY(posY + velocidadeY);
+         if (posX < 0)
+             setPosX(0.f);
+
+         if (posY < 0) {
+             setPosY(0.f);
+             velocidadeY = 0;
+         }
      }
      void Jogador::colidir(int IdOutro, float colisaoX, float colisaoY) {
          bool colidX = false, colidY = false;
-         if (posYant != posY)
+         /*if (posYant != posY)
              colidY = true;
          else 
-             colidX = true;
-         /*if (posYant != posY && posXant == posX)
+             colidX = true;*/
+         if (posYant != posY && posXant == posX)
              colidY = true;
-         else if (colisaoY > colisaoX)
+         else if (posYant == posY && posXant != posX)
              colidX = true;
-         else
-             colidY = true;*/
+         else if (colisaoX > colisaoY)
+             colidY = true;
+          else
+            colidX = true;
          switch (IdOutro) {
          case 2://Obstaculo
              if (colidX) {
@@ -59,13 +65,15 @@
                      this->setPosX(posX - colisaoX);
                  else
                      this->setPosX(posX + colisaoX);
+                 velocidadeX = 0;
              }
              else {
-                 if (!direcaoCima)
+                 if (!direcaoCima) {
                      this->setPosY(posY - colisaoY);
+                     velocidadeY = 0;
+                 }
                  else
                      this->setPosY(posY + colisaoY);
-                 velocidadeY = 0;
              }
              break;
          case 3://Inimigo
@@ -76,11 +84,12 @@
                      this->setPosX(posX + colisaoX);
              }
              else {
-                 if (!direcaoCima)
+                 if (!direcaoCima) {
                      this->setPosY(posY - colisaoY);
+                     velocidadeY = 0;
+                 }
                  else
                      this->setPosY(posY + colisaoY);
-                 velocidadeY = 0;
              }
              break;
          default:
