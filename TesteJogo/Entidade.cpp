@@ -5,14 +5,20 @@ Entidade::Entidade():Ente() {
 	tamX = 0;
 	tamY = 0;
 }
-Entidade::Entidade(int id, float tX, float tY):Ente(id) {
+Entidade::Entidade(ID id, float tX, float tY):Ente(id) {
 	this->tamX = tX;
 	this->tamY = tY;
 	corpo = new sf::RectangleShape(sf::Vector2f(tX, tY));
-	corpo->setFillColor(sf::Color::Blue);
 }
 Entidade::~Entidade() {
-	delete corpo;
+	if (corpo)
+		delete corpo;
+	tamX = 0;
+	tamY = 0;
+	posX = 0;
+	posY = 0;
+	posXant = 0;
+	posYant = 0;
 }
 float Entidade::getTamX() {
 	return this->tamX;
@@ -60,4 +66,8 @@ float Entidade::getCentroX() {
 float Entidade::getCentroY() {
 	float centroY = posY + tamY / 2.f;
 	return centroY;
+}
+void Entidade::imprimir_se() {
+	if (gerenciadorGrafico)
+		gerenciadorGrafico->draw(this->corpo);
 }

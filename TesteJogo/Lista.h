@@ -8,22 +8,9 @@ private:
 	Elemento<TIPO>* pUltimo;
 	int tam;
 public:
-	Lista() {
-		pPrimeiro = nullptr;
-		pUltimo = nullptr;
-		tam = 0;
-	}
-	~Lista() {
-		Elemento<TIPO>* aux = new Elemento<TIPO>;
-		for (aux = pPrimeiro->getpProx(); aux != nullptr; aux = aux->getpProx()) {
-			delete pPrimeiro;
-			pPrimeiro = aux;
-		}
-		delete aux;
-		pPrimeiro = nullptr;
-		pUltimo = nullptr;
-	}
-	void push(TIPO* info) {
+	Lista();
+	~Lista();
+	void inserir(TIPO* info) {
 		if (info != nullptr) {
 			Elemento<TIPO>* elemenInfo = new Elemento<TIPO>;
 			if (pPrimeiro == nullptr) {
@@ -43,33 +30,32 @@ public:
 			tam++;
 		}
 	}
-	void pop(TIPO* info) {
-		if (info != nullptr) {
-			Elemento<TIPO>* elemenInfo = new Elemento<TIPO>;
-			elemenInfo = pPrimeiro;
-			if (elemenInfo->getpInfo() == info) {
-				pPrimeiro = pPrimeiro->getpProx();
-				pPrimeiro->setpAnt(nullptr);
-				delete elemenInfo;
-				tam--;
-				return;
-			}
-			while (elemenInfo != nullptr && elemenInfo->getpInfo() != info) {
-				elemenInfo = elemenInfo->getpProx();
-			}
-			if (elemenInfo) {
-				if (elemenInfo == pUltimo) {
-					pUltimo = pUltimo->getpAnt();
-					pUltimo->setpProx(nullptr);
-				}
-				else {
-					elemenInfo->getpAnt()->setpProx(elemenInfo->getpProx());
-					elemenInfo->getpProx()->setpAnt(elemenInfo->getpAnt());
-				}
-				delete elemenInfo;
-				tam--;
-			}
+	void retirar(TIPO* info) {
+		printf(" ok\n");
+		if (info == nullptr)
+			return;
+		Elemento<TIPO>* pElemento;
+		pElemento = pPrimeiro;
+		while (pElemento != nullptr && pElemento->getpInfo() != info) {
+			pElemento = pElemento->getpProx();
 		}
+		if (pElemento == nullptr)
+			return;
+
+		if (pPrimeiro == pElemento) {
+			pPrimeiro = pElemento->getpProx();
+			pPrimeiro->setpAnt(nullptr);
+		}
+		else if (pElemento == pUltimo) {
+			pUltimo = pElemento->getpAnt();
+			pUltimo->setpProx(nullptr);
+		}
+		else  {
+			pElemento->getpProx()->setpAnt(pElemento->getpAnt());
+			pElemento->getpAnt()->setpProx(pElemento->getpProx());
+		}
+		delete pElemento;
+		tam--;
 	}
 	int getTam() {
 		return tam;
@@ -84,6 +70,32 @@ public:
 		}
 		return nullptr;
 	}
+	void limpar() {
+
+		Elemento<TIPO>* aux = pPrimeiro;
+		int i = 0;
+		while (aux != nullptr && i < tam) {
+			pPrimeiro = aux->getpProx();
+			delete aux;
+			aux = pPrimeiro;
+			i++;
+		}
+
+		pPrimeiro = nullptr;
+		pUltimo = nullptr;
+		tam = 0;
+	}
 
 };
+
+template<class TIPO>
+Lista<TIPO>::Lista() {
+	pPrimeiro = nullptr;
+	pUltimo = nullptr;
+	tam = 0;
+}
+template<class TIPO>
+Lista<TIPO>::~Lista() {
+	this->limpar();
+}
 

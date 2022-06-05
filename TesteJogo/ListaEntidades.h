@@ -6,8 +6,8 @@ public:
 	ListaEntidades();
 	~ListaEntidades();
 	Lista<Entidade> lE;
-	void push(Entidade* entid);
-	void pop(Entidade* entid);
+	void inserir(Entidade* entid);
+	void retirar(Entidade* entid);
 	int getTam();
 	Entidade* operator[](int index) {
 		return lE[index];

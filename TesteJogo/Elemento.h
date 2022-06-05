@@ -11,7 +11,8 @@ public:
 		pInfo = nullptr;
 	}
 	~Elemento() {
-		delete pInfo;
+		if (pInfo != nullptr)
+			delete pInfo;
 		pProx = nullptr;
 		pAnt = nullptr;
 	}
@@ -19,7 +20,7 @@ public:
 		pInfo = pI;
 	}
 	TIPO* getpInfo() {
-		return pInfo;
+			return pInfo;
 	}
 	void setpProx(Elemento <TIPO>* elem) {
 		this->pProx = elem;
@@ -28,10 +29,10 @@ public:
 		this->pAnt = elem;
 	}
 	Elemento <TIPO>* getpProx() {
-		return this->pProx;
+			return this->pProx;
 	}
 	Elemento <TIPO>* getpAnt() {
-		return this->pAnt;
+			return this->pAnt;
 	}
 };
 

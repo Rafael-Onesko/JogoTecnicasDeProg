@@ -2,13 +2,13 @@
 ListaEntidades::ListaEntidades() {
 }
 ListaEntidades::~ListaEntidades() {
-
+	lE.limpar();
 }
-void ListaEntidades::push(Entidade* entid) {
-	lE.push(entid);
+void ListaEntidades::inserir(Entidade* entid) {
+	lE.inserir(entid);
 }
-void ListaEntidades::pop(Entidade* entid) {
-	lE.pop(entid);
+void ListaEntidades::retirar(Entidade* entid) {
+	lE.retirar(entid);
 }
 int ListaEntidades::getTam() {
 	return lE.getTam();

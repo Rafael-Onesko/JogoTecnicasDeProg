@@ -1,0 +1,102 @@
+#include "Vampiro.h"
+Vampiro::Vampiro() :Inimigo() {
+
+}
+Vampiro::~Vampiro() {
+
+}
+Vampiro::Vampiro(float tX, float tY,Jogador* jog1, Jogador* jog2) :Inimigo(tX, tY, 60.f, vampiro, jog1, jog2) {
+	alcancePerseguir = 2 * tX;
+	alcanceMover = 3 * tX;
+	vidas = 200;
+	perseguindoJog1 = false;
+	perseguindoJog2 = false;
+	fugindo = false;
+}
+void Vampiro::receberDano() {
+	fugindo = true;
+	vidas--;
+	if (vidas < 0)
+		vivo = false;
+}
+void Vampiro::procuraJogador() {
+	distanciaJog1 = jogador1->getCentroX() - this->getCentroX();
+	distanciaJog2 = FLT_MAX;
+	
+	if (jogador2)
+		distanciaJog2 = jogador2->getCentroX() - this->getCentroX();
+	if (fugindo) {
+		if (fabs(distanciaJog1) > 2*tamX && fabs(distanciaJog2) > 2*tamX)
+			fugindo = false;
+	}
+	else {
+		if (fabs(distanciaJog1) < tamX || fabs(distanciaJog2) < tamX) {
+			fugindo = true;
+			return;
+		}
+		if (fabs(distanciaJog1) < fabs(distanciaJog2) && fabs(distanciaJog1) <= alcancePerseguir)
+			perseguindoJog1 = true;
+		else
+			perseguindoJog1 = false;
+
+		if (fabs(distanciaJog2) < fabs(distanciaJog1) && fabs(distanciaJog2) <= alcancePerseguir)
+			perseguindoJog2 = true;
+		else
+			perseguindoJog2 = false;
+	}
+}
+void Vampiro::executar(float dt) {
+	procuraJogador();
+	if ((!fugindo) && (perseguindoJog1 || perseguindoJog2))
+		perseguir();
+	ajustarDeslocamento(dt);
+	if (fugindo)
+		velocidadeX = 2 * velocidadeX;
+	mover();
+}
+float Vampiro::getAlcancePerseguir() {
+	return this->alcancePerseguir;
+}
+bool Vampiro::getPerseguindoJog1() {
+	return this->perseguindoJog1;
+}
+bool Vampiro::getPerseguindoJog2() {
+	return this->perseguindoJog2;
+}
+void Vampiro::perseguir() {
+	if (perseguindoJog1) {
+		if (distanciaJog1 < 0) {
+			if (direcao == 1) {
+				direcao = -1;
+				if (andou < alcanceMover)
+					andou = alcanceMover - andou;
+			}
+		}
+		else {
+			if (direcao == -1) {
+				direcao = 1;
+				if (andou < alcanceMover)
+					andou = alcanceMover - andou;
+			}
+		}
+	}
+	else if (perseguindoJog2) {
+		if (distanciaJog2 < 0) {
+			if (direcao == 1) {
+				direcao = -1;
+				if (andou < alcanceMover)
+					andou = alcanceMover - andou;
+			}
+		}
+		else {
+			if (direcao == -1) {
+				direcao = 1;
+				if (andou < alcanceMover)
+					andou = alcanceMover - andou;
+			}
+		}
+	}
+}
+int Vampiro::getVidas() {
+	return this->vidas;
+}

@@ -17,7 +17,7 @@ void Gerenciador_Colisoes::verificarColisoes() {
 	Entidade* ent = nullptr;
 	Entidade* entOutro = nullptr;
 	for (int i = 0; i < listaEntidades->getTam(); i++) {
-		for (int j = 0; j < listaEntidades->getTam(); j++) {
+		for (int j = i + 1; j < listaEntidades->getTam(); j++) {
 			if (i != j) {
 				ent = (*listaEntidades)[i];
 				entOutro = (*listaEntidades)[j];

@@ -1,6 +1,5 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "Jogador.h"
 
 class Gerenciador_Grafico {
 private:
@@ -8,6 +7,7 @@ private:
     sf::View* camera;
     int larguraJanela;
     int alturaJanela;
+    std::map<const char*, sf::Texture*> texturas;
 public:
     Gerenciador_Grafico();
     ~Gerenciador_Grafico();
@@ -16,5 +16,7 @@ public:
     void clear();
     void display();
     void draw(sf::RectangleShape* forma);
+    sf::Texture* carregarTextura(const char* caminho);
+    void ajustarTextura();
     void ajustarCamera(sf::RectangleShape* jogador);
 };

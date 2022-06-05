@@ -1,98 +1,106 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Jogador.h"
-#define GRAVIDADE 0.009
-    Jogador::Jogador(float tX, float tY, float vel) :Personagem(1, tX, tY, vel) {
+#include <stdio.h>
+    Jogador::Jogador(float tX, float tY, float vel) :Personagem(jogador1, tX, tY, vel) {
         posXant = 0;
         posYant = 0;
+        vidas = 500;
     }
     Jogador::Jogador():Personagem(){
+        vidas = 0;
     }
      Jogador::~Jogador(){
      
      }
-     void Jogador::move() {
-         
-         posXant = posX;
-         posYant = posY;
+     void Jogador::ajustarDeslocamento(float dt) {
          if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
              direcaoDireita = true;
-             velocidadeX = velPadrao;
+             velocidadeX = velPadrao*dt;
          }
          else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
              direcaoDireita = false;
-             velocidadeX = -velPadrao;
+             velocidadeX = -velPadrao * dt;
          }
-         else// if (velocidadeY == 0)
+         else
              velocidadeX = 0;
          if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-             if(velocidadeY == 0)
-                velocidadeY = -velPadrao*3.7f;
+             if (noChao) {
+                 velocidadeY = -velPadrao * 4.7f * 0.002f;
+                 noChao = false;
+             }
          }
-         velocidadeY += (float)GRAVIDADE;
-         if (velocidadeY < 0)
+         if (!noChao)
+             velocidadeY += (float)GRAVIDADE * dt * dt;
+         else
+             velocidadeY = 0;
+         if (posY < posYant)
              direcaoCima = true;
          else
              direcaoCima = false;
-         this->setPosX(posX + velocidadeX);
-         this->setPosY(posY + velocidadeY);
-         if (posX < 0)
-             setPosX(0.f);
-
-         if (posY < 0) {
-             setPosY(0.f);
-             velocidadeY = 0;
-         }
+         noChao = false;
      }
-     void Jogador::colidir(int IdOutro, float colisaoX, float colisaoY) {
-         bool colidX = false, colidY = false;
-         /*if (posYant != posY)
-             colidY = true;
-         else 
-             colidX = true;*/
-         if (posYant != posY && posXant == posX)
-             colidY = true;
-         else if (posYant == posY && posXant != posX)
+     void Jogador::colidir(ID IdOutro, float colisaoX, float colisaoY) {
+         
+         bool colidX = false;
+         if (posYant != posY && posXant == posX) {
+             colidX = false;
+             if (IdOutro == ID::vampiro || IdOutro == ID::goblin)
+                 printf("1  %d  %f %f %f\n", noChao, velocidadeY, posY, posYant);
+         }
+         else if (posYant == posY && posXant != posX){
              colidX = true;
-         else if (colisaoX > colisaoY)
-             colidY = true;
-          else
-            colidX = true;
-         switch (IdOutro) {
-         case 2://Obstaculo
+             if (IdOutro == ID::vampiro || IdOutro == ID::goblin)
+                 printf("2\n");
+         }
+         else if (posYant == posY && posXant == posX){
+             colidX   = true;
+             if (IdOutro == ID::vampiro || IdOutro == ID::goblin)
+                 printf("3\n");
+         }
+         else if (colisaoX > colisaoY){
+                 colidX = false;
+             if (IdOutro == ID::vampiro || IdOutro == ID::goblin)
+                 printf("4\n");
+        }
+         else
+             colidX = true;
+         if (IdOutro != agua && IdOutro != bolaDeFogo){
              if (colidX) {
-                 if (direcaoDireita)
-                     this->setPosX(posX - colisaoX);
-                 else
-                     this->setPosX(posX + colisaoX);
+                 if (posX != posXant) {
+                     if (direcaoDireita)
+                         this->setPosX(posX - colisaoX);
+                     else
+                         this->setPosX(posX + colisaoX);
+                     posXant = posX;
+                 }
                  velocidadeX = 0;
              }
              else {
                  if (!direcaoCima) {
                      this->setPosY(posY - colisaoY);
-                     velocidadeY = 0;
+                     noChao = true;
                  }
-                 else
+
+                 else {
                      this->setPosY(posY + colisaoY);
-             }
-             break;
-         case 3://Inimigo
-             if (colidX) {
-                 if (direcaoDireita)
-                     this->setPosX(posX - colisaoX);
-                 else
-                     this->setPosX(posX + colisaoX);
-             }
-             else {
-                 if (!direcaoCima) {
-                     this->setPosY(posY - colisaoY);
-                     velocidadeY = 0;
                  }
-                 else
-                     this->setPosY(posY + colisaoY);
+                 velocidadeY = 0;
+                 posYant = posY;
              }
-             break;
-         default:
-             break;
+        }
+     }
+
+     void Jogador::receberDano() {
+         vidas -= 1;
+         if (vidas <= 0) {
+             vivo = false;
          }
+     }
+     int Jogador::getVidas() {
+         return vidas;
+     }
+     void Jogador::executar(float dt) {
+         ajustarDeslocamento(dt);
+         mover();
      }
