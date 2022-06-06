@@ -5,7 +5,8 @@
     Jogador::Jogador(float tX, float tY, float vel) :Personagem(jogador1, tX, tY, vel) {
         posXant = 0;
         posYant = 0;
-        vidas = 500;
+        vidas = 100;
+        naAgua = false;
     }
     Jogador::Jogador():Personagem(){
         vidas = 0;
@@ -15,18 +16,22 @@
      }
      void Jogador::ajustarDeslocamento(float dt) {
          if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-             direcaoDireita = true;
              velocidadeX = velPadrao*dt;
+             direcaoDireita = true;
          }
          else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-             direcaoDireita = false;
              velocidadeX = -velPadrao * dt;
+             direcaoDireita = false;
          }
          else
              velocidadeX = 0;
          if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
              if (noChao) {
                  velocidadeY = -velPadrao * 4.7f * 0.002f;
+                 noChao = false;
+             }
+             else if (naAgua) {
+                 velocidadeY = -velPadrao * 1.7f * 0.002f;
                  noChao = false;
              }
          }
@@ -38,7 +43,12 @@
              direcaoCima = true;
          else
              direcaoCima = false;
+         if (naAgua) {
+             velocidadeX = velocidadeX / 10.f;
+             velocidadeY = velocidadeY / 1.2f;
+         }
          noChao = false;
+         naAgua = false;
      }
      void Jogador::colidir(ID IdOutro, float colisaoX, float colisaoY) {
          
@@ -66,13 +76,15 @@
          else
              colidX = true;
          if (IdOutro != agua && IdOutro != bolaDeFogo){
+             if (IdOutro == espinho)
+                 this->receberDano();
              if (colidX) {
                  if (posX != posXant) {
                      if (direcaoDireita)
                          this->setPosX(posX - colisaoX);
                      else
                          this->setPosX(posX + colisaoX);
-                     posXant = posX;
+                  //   posXant = posX;
                  }
                  velocidadeX = 0;
              }
@@ -89,6 +101,9 @@
                  posYant = posY;
              }
         }
+         else if (IdOutro == ID::agua) {
+             naAgua = true;
+         }
      }
 
      void Jogador::receberDano() {
@@ -103,4 +118,5 @@
      void Jogador::executar(float dt) {
          ajustarDeslocamento(dt);
          mover();
+         gerenciadorGrafico->ajustarCamera(corpo);
      }

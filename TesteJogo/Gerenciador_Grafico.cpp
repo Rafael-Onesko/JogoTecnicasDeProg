@@ -1,9 +1,7 @@
 #pragma once
 #include "Gerenciador_Grafico.h"
 #include <SFML/Graphics.hpp>
-Gerenciador_Grafico::Gerenciador_Grafico():texturas(){
-    larguraJanela = 800;
-    alturaJanela = 750;
+Gerenciador_Grafico::Gerenciador_Grafico() :texturas(),larguraJanela(800), alturaJanela(750) {
     janela = new sf::RenderWindow(sf::VideoMode(larguraJanela,alturaJanela), "Game");
     camera = new sf::View(sf::Vector2f((float)larguraJanela/2.f, (float)larguraJanela/2.f), sf::Vector2f((float) larguraJanela, (float) alturaJanela));
     janela->setView(*camera);
@@ -70,4 +68,10 @@ void Gerenciador_Grafico::ajustarCamera(sf::RectangleShape* jogador) {
         centroCameraY = alturaJanela / 2.f + ((jogador->getPosition().y - alturaJanela / 2.f) / 4.f);
     camera->setCenter(sf::Vector2f(centroCameraX, centroCameraY));
     janela->setView(*camera);
+}
+const unsigned int Gerenciador_Grafico::getlarguraJanela() {
+    return this->larguraJanela;
+}
+const unsigned int Gerenciador_Grafico::getAlturaJanela() {
+    return this->larguraJanela;
 }

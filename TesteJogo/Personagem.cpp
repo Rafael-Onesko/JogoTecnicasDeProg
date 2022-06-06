@@ -53,5 +53,7 @@ void Personagem::mover() {
 	this->setPosY(posY + velocidadeY);
 	if (posX < 0)
 		setPosX(0.f);
+	if (posY > gerenciadorGrafico->getAlturaJanela())
+		vivo = false;
 }
 

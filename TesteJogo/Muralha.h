@@ -3,5 +3,10 @@
 class Muralha :
 	public Obstaculo
 {
+private:
+public:
+	Muralha();
+	~Muralha();
+	Muralha(float pX, float pY);
 };
 

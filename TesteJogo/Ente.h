@@ -8,7 +8,7 @@ enum ID {
 	vampiro,
 	dragao,
 	agua,
-	espinhos,
+	espinho,
 	muralha,
 	jogador2,
 	bolaDeFogo

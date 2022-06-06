@@ -5,8 +5,8 @@ class Gerenciador_Grafico {
 private:
     sf::RenderWindow* janela;
     sf::View* camera;
-    int larguraJanela;
-    int alturaJanela;
+    const unsigned int larguraJanela;
+    const unsigned int alturaJanela;
     std::map<const char*, sf::Texture*> texturas;
 public:
     Gerenciador_Grafico();
@@ -19,4 +19,6 @@ public:
     sf::Texture* carregarTextura(const char* caminho);
     void ajustarTextura();
     void ajustarCamera(sf::RectangleShape* jogador);
+    const unsigned int getlarguraJanela();
+    const unsigned int getAlturaJanela();
 };

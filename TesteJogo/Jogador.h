@@ -4,6 +4,7 @@
 class Jogador : public Personagem {
 private:
     int vidas;
+    bool naAgua;
 public:
     Jogador(float tX, float tY, float vel);
     Jogador();

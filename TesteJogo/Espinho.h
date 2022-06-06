@@ -6,5 +6,6 @@ private:
 public:
 	Espinho();
 	~Espinho();
+	Espinho(float pX, float pY);
 };
 

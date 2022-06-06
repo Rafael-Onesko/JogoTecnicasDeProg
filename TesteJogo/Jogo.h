@@ -5,7 +5,9 @@
 #include "Goblin.h"
 #include "Vampiro.h"
 #include "Dragao.h"
-#include "Obstaculo.h"
+#include "Muralha.h"
+#include "Espinho.h"
+#include "Agua.h"
 #include "ListaEntidades.h"
 class Jogo {
 private:
@@ -14,7 +16,9 @@ private:
     Vampiro* enemy2;
     Dragao* enemy3;
     Obstaculo* obst1;
-    Obstaculo* obst2;
+    Espinho* obst2;
+    Muralha* muralha1;
+    Agua* agua1;
     Gerenciador_Grafico* gerenciadorGrafico;
     Gerenciador_Colisoes* gerenciadorColisoes;
     ListaEntidades* entidades;

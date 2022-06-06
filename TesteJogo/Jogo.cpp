@@ -9,7 +9,9 @@ Jogo::Jogo (){
     enemy2 = new Vampiro(100.f, 100.f, player1);
     enemy3 = new Dragao(player1);
     obst1 = new Obstaculo(2400.f, 50.f, plataforma);
-    obst2 = new Obstaculo(100.f, 100.f, plataforma);
+    obst2 = new Espinho(200.f, 550.f);
+    muralha1 = new Muralha(400.f, 400.f);
+    agua1 = new Agua(2400.f, 600.f);
     enemy1->setPosX(600.f);
     enemy1->setPosY(500.f);
     enemy2->setPosX(1000.f);
@@ -18,14 +20,14 @@ Jogo::Jogo (){
     enemy3->setPosY(0.0f);
     obst1->setPosY(600.f);
     obst1->setPosX(0.f);
-    obst2->setPosY(500.f);
-    obst2->setPosX(200.f);
     entidades->inserir(player1);
     entidades->inserir(obst1);
     entidades->inserir(obst2);
     entidades->inserir(enemy1);
     entidades->inserir(enemy2);
     entidades->inserir(enemy3);
+    entidades->inserir(muralha1);
+    entidades->inserir(agua1);
     enemy1->getCorpo()->setFillColor(sf::Color::Yellow);
     enemy2->getCorpo()->setFillColor(sf::Color::Red);
     enemy3->getCorpo()->setFillColor(sf::Color::White);
@@ -62,10 +64,9 @@ void Jogo::executar(){
                    (*entidades)[i]->executar(dt);
            }
             else {
-               entidades->retirar((*entidades)[i]); 
+               entidades->retirar((*entidades)[i]);
             }
         }
-        gerenciadorGrafico->ajustarCamera(player1->getCorpo());
         for (int i = 0; i < entidades->getTam(); i++)
             (*entidades)[i]->imprimir_se();
         gerenciadorGrafico->display();
