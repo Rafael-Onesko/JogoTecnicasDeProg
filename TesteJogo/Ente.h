@@ -11,7 +11,8 @@ enum ID {
 	espinho,
 	muralha,
 	jogador2,
-	bolaDeFogo
+	bolaDeFogo,
+	fase
 };
 class Ente
 {

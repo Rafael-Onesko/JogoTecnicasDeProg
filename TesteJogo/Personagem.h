@@ -9,7 +9,6 @@ protected:
 		bool direcaoDireita;
 		bool direcaoCima;
 		bool noChao;
-		bool vivo;
 public:
 	Personagem(ID id, float tX, float tY, float vel);
 	Personagem();
@@ -21,9 +20,7 @@ public:
 	bool getDirecaoDireita();
 	bool getDirecaoCima();
 	bool getNochao();
-	bool getVivo();
-	void setVivo(bool vivo);
-	virtual void receberDano() = 0;
+	virtual void receberDano(int dano = 1) = 0;
 	virtual void mover();
 	virtual void ajustarDeslocamento(float dt) = 0;
 };

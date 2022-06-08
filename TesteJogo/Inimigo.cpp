@@ -1,22 +1,25 @@
 #include "Inimigo.h"
+int Inimigo::numInimigos = 0;
+int Inimigo::getNumInimigos() {
+    return numInimigos;
+}
 Inimigo::Inimigo(): Personagem() {
-	vivo = true;
 	direcao = 1;
 	andou = 0;
 }  
 Inimigo::Inimigo(float tX, float tY, float vel, ID id, Jogador* jog1, Jogador* jog2) :Personagem(id, tX, tY, vel) {
 	alcanceMover = 2 * tX;
-	vivo = true;
 	direcao = 1;
 	andou = 0;
     this->jogador1 = jog1;
     this->jogador2 = jog2;
+    numInimigos++;
 }
 
 Inimigo::~Inimigo() {
-
     this->jogador1 = nullptr;
     this->jogador2 = nullptr;
+    numInimigos--;
 }
 void Inimigo::setJogador2(Jogador* jog2) {
 	this->jogador2 = jog2;

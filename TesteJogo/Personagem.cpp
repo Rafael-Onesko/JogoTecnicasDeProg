@@ -4,9 +4,9 @@ Personagem::Personagem(ID id, float tX, float tY,float vel) : Entidade(id, tX, t
 	this->velPadrao = vel;
 	this->velocidadeX = 0;
 	this->velocidadeY = 0;
-	vivo = true;
 	noChao = false;
 }
+
 Personagem::Personagem() : Entidade() {
 	this->velPadrao = 0;
 	this->velocidadeX = 0;
@@ -14,7 +14,6 @@ Personagem::Personagem() : Entidade() {
 	direcaoDireita = false;
 	direcaoCima = false;
 	noChao = false;
-	vivo = true;
 }
 Personagem::~Personagem() {
 
@@ -39,12 +38,6 @@ bool Personagem::getDirecaoCima(){
 }
 bool Personagem::getNochao() {
 	return this->noChao;
-}
-bool Personagem::getVivo() {
-	return this->vivo;
-}
-void Personagem::setVivo(bool vivo) {
-	this->vivo = vivo;
 }
 void Personagem::mover() {
 	posXant = posX;

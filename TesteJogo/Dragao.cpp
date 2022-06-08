@@ -1,5 +1,13 @@
 #include "Dragao.h"
-Dragao::Dragao(Jogador* jog1, Jogador* jog2) : Inimigo(150.f, 100.f, 80.f, dragao, jog1, jog2) {
+int Dragao::numDragaos = 0;
+int Dragao::getNumDragaos() {
+	return numDragaos;
+}
+Dragao::Dragao(float pX, float pY, ListaEntidades* listEntid, Jogador* jog1, Jogador* jog2) : Inimigo(150.f, 100.f, 80.f, dragao, jog1, jog2) {
+	this->setPosX(pX);
+	this->setPosY(pY);
+	if (listEntid)
+		this->lE = listEntid;
 	vidas = 500;
 	alcanceMover = 3*tamX;
 	alcanceAtacar = 2 * tamX;
@@ -9,16 +17,18 @@ Dragao::Dragao(Jogador* jog1, Jogador* jog2) : Inimigo(150.f, 100.f, 80.f, draga
 	fugindo = false;
 	tempoAtaque = 2.f;
 	tempoAtacando = 0.0f;
+	bolaDeFogo = nullptr;
+	numDragaos++;
 }
 Dragao::~Dragao() {
-	bolaDeFogo = nullptr;
+	numDragaos--;
 }
 Dragao::Dragao() :Inimigo() {
-
+	bolaDeFogo = nullptr;
 }
 
 
-void Dragao::receberDano() {
+void Dragao::receberDano(int dano) {
 	fugindo = true;
 	vidas--;
 	if (vidas < 0) {
@@ -28,7 +38,9 @@ void Dragao::receberDano() {
 
 
 void Dragao::colidir(ID IdOutro, float colisaoX, float colisaoY) {
-    bool colidX = false;
+	if (IdOutro == ID::bolaDeFogo)
+		return;
+	bool colidX = false;
     if (colisaoY > colisaoX)
         colidX = true;
 
@@ -115,9 +127,13 @@ void Dragao::atacar(float dt) {
 	}
 }
 
-
 void Dragao::tacarFogo() {
 
+		bolaDeFogo = new Bola_De_Fogo(posX, posY, direcao);
+		bolaDeFogo->setGerenciadorGrafico(gerenciadorGrafico);
+
+	if(bolaDeFogo)
+		lE->inserir(bolaDeFogo);
 }
 
 

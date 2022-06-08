@@ -13,6 +13,7 @@ protected:
     float posY;
     float posXant;
     float posYant;
+    bool vivo;
 public:
     Entidade(ID id, float tX, float tY);
     Entidade();
@@ -29,7 +30,9 @@ public:
     float getPosYant();
     float getCentroX();
     float getCentroY();
-    virtual bool getVivo() { return true; }
+    float getDireita();
+    bool getVivo();
+    void setVivo(bool viv);
     sf::RectangleShape* getCorpo();
     virtual void colidir(ID IdOutro, float colisaoX, float colisaoY) {};
     void imprimir_se();

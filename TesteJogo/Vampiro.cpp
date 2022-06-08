@@ -1,19 +1,26 @@
 #include "Vampiro.h"
+int Vampiro::numVampiros = 0;
+int Vampiro::getNumVampiros() {
+	return numVampiros;
+}
 Vampiro::Vampiro() :Inimigo() {
 
 }
 Vampiro::~Vampiro() {
-
+	numVampiros--;
 }
-Vampiro::Vampiro(float tX, float tY,Jogador* jog1, Jogador* jog2) :Inimigo(tX, tY, 60.f, vampiro, jog1, jog2) {
-	alcancePerseguir = 2 * tX;
-	alcanceMover = 3 * tX;
+Vampiro::Vampiro(float pX, float pY,Jogador* jog1, Jogador* jog2) :Inimigo(100.f, 100.f, 60.f, vampiro, jog1, jog2) {
+	alcancePerseguir = 2 * tamX;
+	alcanceMover = 3 * tamX;
+	setPosX(pX);
+	setPosY(pY);
 	vidas = 200;
 	perseguindoJog1 = false;
 	perseguindoJog2 = false;
 	fugindo = false;
+	numVampiros++;
 }
-void Vampiro::receberDano() {
+void Vampiro::receberDano(int dano) {
 	fugindo = true;
 	vidas--;
 	if (vidas < 0)

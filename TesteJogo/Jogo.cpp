@@ -1,74 +1,65 @@
 #include <SFML/Graphics.hpp>
 #include "Jogo.h"
+#include <algorithm>
 #include <iostream>
+#include <string>
+#include <list>
 using namespace std;
+void randomiza(string coisa, vector<string>* vetor) {
+    int num = rand() % 2 + 3;
+    int pos = rand() % 23 + 1;
+    for (int i = 0; i < num; i++) {
+        while ((*vetor)[pos] != " ") {
+            pos = rand() % 24;
+        }
+        (*vetor)[pos] = coisa;
+
+    }
+}
 Jogo::Jogo (){
-    entidades = new ListaEntidades;
-    player1 = new Jogador(100.f,100.f,200.0f);
-    enemy1 = new Goblin (100.f, 100.f, player1);
-    enemy2 = new Vampiro(100.f, 100.f, player1);
-    enemy3 = new Dragao(player1);
-    obst1 = new Obstaculo(2400.f, 50.f, plataforma);
-    obst2 = new Espinho(200.f, 550.f);
-    muralha1 = new Muralha(400.f, 400.f);
-    agua1 = new Agua(2400.f, 600.f);
-    enemy1->setPosX(600.f);
-    enemy1->setPosY(500.f);
-    enemy2->setPosX(1000.f);
-    enemy2->setPosY(500.f);
-    enemy3->setPosX(2000.f);
-    enemy3->setPosY(0.0f);
-    obst1->setPosY(600.f);
-    obst1->setPosX(0.f);
-    entidades->inserir(player1);
-    entidades->inserir(obst1);
-    entidades->inserir(obst2);
-    entidades->inserir(enemy1);
-    entidades->inserir(enemy2);
-    entidades->inserir(enemy3);
-    entidades->inserir(muralha1);
-    entidades->inserir(agua1);
-    enemy1->getCorpo()->setFillColor(sf::Color::Yellow);
-    enemy2->getCorpo()->setFillColor(sf::Color::Red);
-    enemy3->getCorpo()->setFillColor(sf::Color::White);
-    player1->getCorpo()->setFillColor(sf::Color::Green);
-    obst1->getCorpo()->setFillColor(sf::Color::Cyan);
-    obst2->getCorpo()->setFillColor(sf::Color::Blue);
-    //obst1->getCorpo()->setTexture(gerenciadorGrafico->carregarTextura("Assets/Grama.png"));
+    /*entidades = new ListaEntidades;
+    player1 = new Jogador(100.f,100.f,200.0f);*/
     gerenciadorGrafico = new Gerenciador_Grafico;
-    gerenciadorColisoes = new Gerenciador_Colisoes(entidades);
-    for (int i = 0; i < entidades->getTam(); i++)
-        (*entidades)[i]->setGerenciadorGrafico(gerenciadorGrafico);
+    srand(time(NULL));
+    faseTeste = new Fase(false, gerenciadorGrafico);
 
     executar();
 }
 Jogo::~Jogo(){
-    if(entidades)
-        delete entidades;
-    if(gerenciadorColisoes)
-        delete gerenciadorColisoes;
-    if(gerenciadorGrafico)
+    if (gerenciadorGrafico)
         delete gerenciadorGrafico;
+    if (faseTeste)
+        delete faseTeste;
 }
 void Jogo::executar(){
     sf::Clock dt_clock;
     while (gerenciadorGrafico->janelaAberta())
     {
+        //float dt = gerenciadorGrafico->getDt();
         float dt = dt_clock.restart().asSeconds();
         gerenciadorGrafico->pollEvent();
 
         gerenciadorGrafico->clear();
-        gerenciadorColisoes->verificarColisoes();
+
+        faseTeste->executar(dt);
+        /*gerenciadorColisoes->verificarColisoes();
         for (int i = 0; i < entidades->getTam(); i++) {
-           if ((*entidades)[i]->getVivo() == true) {
-                   (*entidades)[i]->executar(dt);
+            if ((*entidades)[i]->getVivo() == true) {
+                if (((*entidades)[i]->getDireita() > gerenciadorGrafico->getEsquerdaCamera()) ||
+                    ((*entidades)[i]->getPosX() < gerenciadorGrafico->getDireitaCamera()))
+                (*entidades)[i]->executar(dt);
            }
             else {
                entidades->retirar((*entidades)[i]);
             }
         }
-        for (int i = 0; i < entidades->getTam(); i++)
+
+
+        for (int i = 0; i < entidades->getTam(); i++) {
+            if(((*entidades)[i]->getDireita()> gerenciadorGrafico->getEsquerdaCamera()) ||
+                ((*entidades)[i]->getPosX()  < gerenciadorGrafico->getDireitaCamera()))
             (*entidades)[i]->imprimir_se();
+        }*/
         gerenciadorGrafico->display();
     }
 }

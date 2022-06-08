@@ -4,6 +4,7 @@ class Vampiro :
 	public Inimigo
 {
 private:
+	static int numVampiros;
 	float alcancePerseguir;
 	int vidas;
 	bool perseguindoJog1;
@@ -14,8 +15,8 @@ private:
 public:
 	Vampiro();
 	~Vampiro();
-	Vampiro(float tX, float tY, Jogador* jog1, Jogador* jog2 = nullptr);
-	void receberDano();
+	Vampiro(float pX, float pY, Jogador* jog1, Jogador* jog2 = nullptr);
+	void receberDano(int dano = 1);
 	void executar(float dt);
 	void perseguir();
 	void procuraJogador();
@@ -23,5 +24,6 @@ public:
 	bool getPerseguindoJog1();
 	bool getPerseguindoJog2();
 	int getVidas();
+	static int getNumVampiros();
 };
 

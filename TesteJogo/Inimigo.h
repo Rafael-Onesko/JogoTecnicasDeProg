@@ -3,6 +3,7 @@
 class Inimigo: public Personagem
 {
 protected:
+	static int numInimigos;
 	float alcanceMover;
 	float andou;
 	int direcao;
@@ -13,8 +14,9 @@ public:
 	Inimigo();
 	virtual ~Inimigo();
 	virtual void colidir(ID IdOutro, float colisaoX, float colisaoY);
-	virtual void receberDano() = 0;
+	virtual void receberDano(int dano = 1) = 0;
 	virtual void ajustarDeslocamento(float dt);
 	void setJogador2(Jogador* jog2);
+	static int getNumInimigos();
 };
 
