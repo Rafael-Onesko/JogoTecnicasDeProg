@@ -2,12 +2,25 @@
 #include <SFML/Graphics.hpp>
 #include "Jogador.h"
 #include <stdio.h>
-Jogador::Jogador(float tX, float tY, float vel) :Personagem(jogador1, tX, tY, vel) {
-posXant = 0;
-posYant = 0;
-vidas = 100;
-naAgua = false;
+Jogador::Jogador(float pX, float pY, ID id, int vidas) :Personagem(id, 100.f, 100.f, 200.f) {
+    setPosX(pX);
+    setPosY(pY);
+    posXant = pX;
+    posYant = pX;
+    this->vidas = vidas;
+    naAgua = false;
+    if (id == jogador1) {
+        direita = sf::Keyboard::Right;
+        esquerda = sf::Keyboard::Left;
+        cima = sf::Keyboard::Up;
+    }
+    else {
+        direita = sf::Keyboard::D;
+        esquerda = sf::Keyboard::A;
+        cima = sf::Keyboard::W;
+    }
 }
+
 Jogador::Jogador():Personagem(){
 vidas = 0;
 }
@@ -15,17 +28,17 @@ Jogador::~Jogador(){
      
 }
 void Jogador::ajustarDeslocamento(float dt) {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+    if (sf::Keyboard::isKeyPressed(direita)) {
         velocidadeX = velPadrao*dt;
         direcaoDireita = true;
     }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+    else if (sf::Keyboard::isKeyPressed(esquerda)) {
         velocidadeX = -velPadrao * dt;
         direcaoDireita = false;
     }
     else
         velocidadeX = 0;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+    if (sf::Keyboard::isKeyPressed(cima)) {
         //printf("%f\n", dt);
         if (dt > 0.009f)
             dt = 0.009f;
@@ -72,7 +85,7 @@ void Jogador::colidir(ID IdOutro, float colisaoX, float colisaoY) {
 }
     else
         colidX = true;
-    if (IdOutro != agua){
+    if (IdOutro != agua && IdOutro != jogador2 && IdOutro != jogador1){
         if (IdOutro == espinho) {
             this->receberDano();
         }
@@ -84,21 +97,21 @@ void Jogador::colidir(ID IdOutro, float colisaoX, float colisaoY) {
                     this->setPosX(posX - colisaoX);
                 else
                     this->setPosX(posX + colisaoX);
-            //   posXant = posX;
+               //   posXant = posX;
             }
             velocidadeX = 0;
         }
         else {
-            if (!direcaoCima) {
-                this->setPosY(posY - colisaoY);
-                noChao = true;
-            }
+                if (!direcaoCima) {
+                    this->setPosY(posY - colisaoY);
+                    noChao = true;
+                }
 
-            else {
-                this->setPosY(posY + colisaoY);
-            }
-            velocidadeY = 0;
-            posYant = posY;
+                else {
+                    this->setPosY(posY + colisaoY);
+                }
+                velocidadeY = 0;
+                posYant = posY;
         }
     }
     else if (IdOutro == ID::agua) {

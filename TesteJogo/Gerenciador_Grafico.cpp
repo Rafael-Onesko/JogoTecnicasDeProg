@@ -75,3 +75,27 @@ const unsigned int Gerenciador_Grafico::getlarguraJanela() {
 const unsigned int Gerenciador_Grafico::getAlturaJanela() {
     return this->larguraJanela;
 }
+float Gerenciador_Grafico::getCentroCameraX() {
+    float centroX = camera->getCenter().x;
+    return centroX;
+}
+float Gerenciador_Grafico::getCentroCameraY() {
+    float centroY = camera->getCenter().y;
+    return centroY;
+}
+float Gerenciador_Grafico::getDireitaCamera() {
+    float direita = camera->getCenter().x + larguraJanela/2.f;
+    return direita;
+}
+float Gerenciador_Grafico::getEsquerdaCamera() {
+    float esquerda = camera->getCenter().x - larguraJanela / 2.f;
+    return esquerda;
+}
+float Gerenciador_Grafico::getCimaCamera() {
+    float cima = camera->getCenter().y - alturaJanela/2.f;
+    return cima;
+}
+float Gerenciador_Grafico::getBaixoCamera() {
+    float baixo = camera->getCenter().y + alturaJanela / 2.f;
+    return baixo;
+}

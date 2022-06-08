@@ -5,8 +5,11 @@ class Jogador : public Personagem {
 private:
     int vidas;
     bool naAgua;
+    sf::Keyboard::Key direita;
+    sf::Keyboard::Key esquerda;
+    sf::Keyboard::Key cima;
 public:
-    Jogador(float tX, float tY, float vel);
+    Jogador(float pX, float pY, ID id, int vidas);
     Jogador();
     ~Jogador();
     void colidir(ID IdOutro, float colisaoX, float colisaoY);
