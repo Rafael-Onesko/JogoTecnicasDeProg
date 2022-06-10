@@ -16,3 +16,9 @@ void ListaEntidades::retirar(Entidade* entid) {
 int ListaEntidades::getTam() {
 	return lE.getTam();
 }
+Entidade* ListaEntidades::operator[](int index) {
+	return lE[index];
+}
+void ListaEntidades::operator+=(Entidade* entid) {
+	lE.inserir( entid );
+}

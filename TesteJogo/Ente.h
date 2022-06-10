@@ -12,7 +12,8 @@ enum ID {
 	muralha,
 	jogador2,
 	bolaDeFogo,
-	fase
+	fase,
+	barraVida
 };
 class Ente
 {

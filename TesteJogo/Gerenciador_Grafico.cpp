@@ -1,12 +1,12 @@
 #pragma once
 #include "Gerenciador_Grafico.h"
+#include<exception>
 #include <SFML/Graphics.hpp>
 Gerenciador_Grafico::Gerenciador_Grafico() :texturas(),larguraJanela(800), alturaJanela(750) {
     janela = new sf::RenderWindow(sf::VideoMode(larguraJanela,alturaJanela), "Game");
     camera = new sf::View(sf::Vector2f((float)larguraJanela/2.f, (float)larguraJanela/2.f), sf::Vector2f((float) larguraJanela, (float) alturaJanela));
     janela->setView(*camera);
     camera->setCenter(sf::Vector2f((float) larguraJanela/2.f, (float)alturaJanela / 2.f));
-
 }
 Gerenciador_Grafico::~Gerenciador_Grafico(){
     delete janela;
@@ -26,7 +26,10 @@ sf::Texture* Gerenciador_Grafico::carregarTextura(const char* caminho) {
         it++;
     }
     sf::Texture* textura = new sf::Texture();
-    if (!textura->loadFromFile(caminho)) {
+    try {
+        textura->loadFromFile(caminho);
+    }
+    catch(const std::exception& e){
         printf("Deu ruim aqui\n");
         exit(1);
     }
@@ -34,6 +37,11 @@ sf::Texture* Gerenciador_Grafico::carregarTextura(const char* caminho) {
     texturas.insert(std::pair<const char*, sf::Texture*>(caminho, textura));
 
     return textura;
+}
+
+void Gerenciador_Grafico::colocaTextura(sf::Texture* text, sf::RectangleShape* corpo, int rectX, int rectY, float scaleX, float scaleY) {
+    corpo->setTexture(text);
+    corpo->setTextureRect(sf::IntRect(rectX, rectY, (int)((text->getSize().x)/ scaleX), (int)((text->getSize().y) / scaleY)));
 }
 
 int Gerenciador_Grafico::janelaAberta(){
@@ -47,6 +55,9 @@ void Gerenciador_Grafico::pollEvent(){
             if (event.type == sf::Event::Closed)
                 janela->close();
         }
+}
+void Gerenciador_Grafico::fechaJanela() {
+            janela->close();
 }
 void Gerenciador_Grafico::clear(){
     if (janelaAberta())

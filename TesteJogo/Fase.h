@@ -17,7 +17,7 @@
 using namespace std;
 class Fase: public Ente
 {
-private:
+protected:
 	vector<string> entidadesGeradas;
 	int numObstaculos;
 	const int numTotalPlataformas;
@@ -25,13 +25,17 @@ private:
 	Jogador* player2;
 	Gerenciador_Colisoes* gerenciadorColisoes;
 	ListaEntidades* entidades;
+	float tamanhoFase;
+	bool fim;
 public:
 	Fase();
 	~Fase();
 	Fase(bool doisJogadores, Gerenciador_Grafico* gerenciGrafc);
 	virtual void imprimir_se();
 	void executar(float dt);
-	void geraEntidades();
+	void geraEntidades(vector<string>* nomesEntidades);
 	void randomizarPosicoes(string entidadeCriar);
+	const float  getTamanhoFase() const; 
+	bool  getFim() const;
 };
 

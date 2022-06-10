@@ -9,8 +9,7 @@ public:
 	void inserir(Entidade* entid);
 	void retirar(Entidade* entid);
 	int getTam();
-	Entidade* operator[](int index) {
-		return lE[index];
-	}
+	Entidade* operator[](int index);
+	void operator+=(Entidade * entid);
 };
 

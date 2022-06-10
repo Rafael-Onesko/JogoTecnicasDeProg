@@ -1,12 +1,10 @@
 #include "Fase.h"
+#include "Jogo.h"
 Fase::Fase(bool doisJogadores, Gerenciador_Grafico* gerenciGrafc) :Ente(fase), numTotalPlataformas(25) {
     entidades = new ListaEntidades;
-    player1 = new Jogador(100.f, 100.f, 200.0f);
-    entidades->inserir(player1);
-    if (doisJogadores) {
-        player2 = new Jogador(100.f, 100.f, 200.0f);
-        entidades->inserir(player2);
-    }
+    player1 = new Jogador(gerenciGrafc, 0.0, 0.0, jogador1, 100);
+    if (doisJogadores)
+        player2 = new Jogador(gerenciGrafc, 150.0, 0.0, jogador2, 100);
     else
         player2 = nullptr;
     this->gerenciadorGrafico = gerenciGrafc;
@@ -14,11 +12,20 @@ Fase::Fase(bool doisJogadores, Gerenciador_Grafico* gerenciGrafc) :Ente(fase), n
     entidades->inserir(new Plataforma(false));
     for (int i = 0; i < numTotalPlataformas; i++)
         entidadesGeradas.push_back(" ");
-    geraEntidades();
+   /* geraEntidades();
+    entidades->inserir(player1);
+    if(doisJogadores)
+        entidades->inserir(player2);
     for (int i = 0; i < entidades->getTam(); i++) {
         (*entidades)[i]->setGerenciadorGrafico(gerenciadorGrafico);
         (*entidades)[i]->setVivo(true);
-    }
+    }*/
+    tamanhoFase = numTotalPlataformas * 300.f;
+    fim = false;
+}
+
+Fase::Fase() :Ente(), numTotalPlataformas(0) {
+
 }
 Fase::~Fase() {
     entidadesGeradas.clear();
@@ -48,6 +55,8 @@ void Fase::executar(float dt) {
         }
     }
     imprimir_se();
+    if (Jogo::getGerenciadorGrafico()->getCentroCameraX() > tamanhoFase)
+        fim = true;
 }
 
 void Fase::randomizarPosicoes(string entidadeCriar) {
@@ -62,13 +71,14 @@ void Fase::randomizarPosicoes(string entidadeCriar) {
     }
 }
 
-void Fase::geraEntidades() {
-    randomizarPosicoes("Vampiro");
-    randomizarPosicoes("Goblin");
+void Fase::geraEntidades(vector<string>* nomesEntidades) {
+    for(int i = 0; i < nomesEntidades->size(); i++)
+        randomizarPosicoes((*nomesEntidades)[i]);
+    /*randomizarPosicoes("Goblin");
     randomizarPosicoes("Dragao");
     randomizarPosicoes("Muralha");
     randomizarPosicoes("Espinho");
-    randomizarPosicoes("Agua");
+    randomizarPosicoes("Agua");*/
     bool posicao = false;
     string coisa;
     float lugar;
@@ -83,13 +93,13 @@ void Fase::geraEntidades() {
             lugar = (float)platAtual * 300.f;
             complemento = (float)(rand() % 201);
             if (coisa == "Goblin") {
-                entidades->inserir(new Goblin(lugar + complemento, 550.f + (!posicao) * 50.f - 100.f, player1));
+                entidades->inserir(new Goblin(lugar + complemento, 550.f + (!posicao) * 50.f - 100.f, player1, player2));
             }
             else if (coisa == "Vampiro") {
-                entidades->inserir(new Vampiro(lugar + complemento, 550.f + (!posicao) * 50.f - 100.f, player1));
+                entidades->inserir(new Vampiro(lugar + complemento, 550.f + (!posicao) * 50.f - 100.f, player1, player2));
             }
             else if (coisa == "Dragao") {
-                entidades->inserir(new Dragao(lugar + complemento, 250.f + (!posicao) * 50.f, entidades, player1));
+                entidades->inserir(new Dragao(lugar + complemento, 250.f + (!posicao) * 50.f, entidades, player1, player2));
             }
             else if (coisa == "Muralha") {
                 entidades->inserir(new Muralha(lugar + complemento, 550.f + (!posicao) * 50.f - 200.f));
@@ -104,4 +114,11 @@ void Fase::geraEntidades() {
         }
         posicao = !posicao;
     }
+}
+
+const float  Fase::getTamanhoFase() const {
+    return tamanhoFase;
+}
+bool Fase::getFim() const {
+    return fim;
 }

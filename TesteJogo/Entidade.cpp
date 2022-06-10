@@ -74,6 +74,13 @@ float Entidade::getPosYant() {
 sf::RectangleShape* Entidade::getCorpo(){
 	return corpo;
 }
+sf::Texture* Entidade::getTextura() {
+	return textura;
+}
+void Entidade::setTextura(sf::Texture* text, int rectX, int rectY, float scaleX, float scaleY) {
+	textura = text;
+	gerenciadorGrafico->colocaTextura(textura, corpo, rectX, rectY, scaleX, scaleY);
+}
 float Entidade::getCentroX() {
 	float centroX = posX + tamX / 2.f;
 	return centroX;

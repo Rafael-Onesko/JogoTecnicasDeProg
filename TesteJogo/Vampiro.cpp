@@ -1,4 +1,5 @@
 #include "Vampiro.h"
+#include "Jogo.h"
 int Vampiro::numVampiros = 0;
 int Vampiro::getNumVampiros() {
 	return numVampiros;
@@ -14,10 +15,12 @@ Vampiro::Vampiro(float pX, float pY,Jogador* jog1, Jogador* jog2) :Inimigo(100.f
 	alcanceMover = 3 * tamX;
 	setPosX(pX);
 	setPosY(pY);
-	vidas = 200;
+	vidas = 100;
 	perseguindoJog1 = false;
 	perseguindoJog2 = false;
 	fugindo = false;
+	textura = Jogo::getGerenciadorGrafico()->carregarTextura("./Assets/Vampiro.png");
+	setTextura(textura, 0, 0, 1, 1);
 	numVampiros++;
 }
 void Vampiro::receberDano(int dano) {

@@ -1,14 +1,17 @@
 #include "Dragao.h"
+#include "Jogo.h"
 int Dragao::numDragaos = 0;
 int Dragao::getNumDragaos() {
 	return numDragaos;
 }
-Dragao::Dragao(float pX, float pY, ListaEntidades* listEntid, Jogador* jog1, Jogador* jog2) : Inimigo(150.f, 100.f, 80.f, dragao, jog1, jog2) {
+Dragao::Dragao(float pX, float pY, ListaEntidades* listEntid, Jogador* jog1, Jogador* jog2) : Inimigo(100.f, 100.f, 80.f, dragao, jog1, jog2) {
 	this->setPosX(pX);
 	this->setPosY(pY);
 	if (listEntid)
 		this->lE = listEntid;
-	vidas = 500;
+	textura = Jogo::getGerenciadorGrafico()->carregarTextura("./Assets/Dragao.png");
+	setTextura(textura, textura->getSize().x, 0, -1, 1);
+	vidas = 150;
 	alcanceMover = 3*tamX;
 	alcanceAtacar = 2 * tamX;
 	velocidadeY = 0;
@@ -96,17 +99,17 @@ void Dragao::ajustarDeslocamento(float dt) {
 		andou = 0;
 		direcao = -direcao;
 	}
+	velocidadeY += GRAVIDADE * dt * dt;
+	float forcaFlutuacao = GRAVIDADE * dt * dt;
+	if( vidas > 5)
+		velocidadeY -= forcaFlutuacao;
 }
 
 
 void Dragao::executar(float dt) {
 	procuraJogador();
-	if(atacando)
-		corpo->setFillColor(sf::Color::Magenta);
 	if((ataca) && !(fugindo))
 		atacar(dt);
-	if(!atacando)
-		corpo->setFillColor(sf::Color::White);
 	ajustarDeslocamento(dt);
 	mover();
 }

@@ -1,8 +1,9 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Jogador.h"
+#include "Jogo.h"
 #include <stdio.h>
-Jogador::Jogador(float pX, float pY, ID id, int vidas) :Personagem(id, 100.f, 100.f, 200.f) {
+Jogador::Jogador(Gerenciador_Grafico* gerenciadorGrafico, float pX, float pY, ID id, int vidas) :Personagem(id, 100.f, 100.f, 200.f) {
     setPosX(pX);
     setPosY(pY);
     posXant = pX;
@@ -13,19 +14,26 @@ Jogador::Jogador(float pX, float pY, ID id, int vidas) :Personagem(id, 100.f, 10
         direita = sf::Keyboard::Right;
         esquerda = sf::Keyboard::Left;
         cima = sf::Keyboard::Up;
+        textura = Jogo::getGerenciadorGrafico()->carregarTextura("./Assets/Necromante.png");
+        setTextura(textura, 0, 0, 1, 1);
     }
     else {
         direita = sf::Keyboard::D;
         esquerda = sf::Keyboard::A;
         cima = sf::Keyboard::W;
+        textura = Jogo::getGerenciadorGrafico()->carregarTextura("./Assets/Guerreiro.png");
+        setTextura(textura, 0, 0, 1, 1);
     }
+    barraVida = new Barra_Vida(this);
+    barraVida->setGerenciadorGrafico(gerenciadorGrafico);
 }
 
 Jogador::Jogador():Personagem(){
 vidas = 0;
 }
 Jogador::~Jogador(){
-     
+    if (barraVida)
+        delete barraVida;
 }
 void Jogador::ajustarDeslocamento(float dt) {
     if (sf::Keyboard::isKeyPressed(direita)) {
@@ -132,4 +140,9 @@ void Jogador::executar(float dt) {
     ajustarDeslocamento(dt);
     mover();
     gerenciadorGrafico->ajustarCamera(corpo);
+    barraVida->executar(dt);
+}
+void Jogador::imprimir_se() {
+    gerenciadorGrafico->draw(corpo);
+    barraVida->imprimir_se();
 }
