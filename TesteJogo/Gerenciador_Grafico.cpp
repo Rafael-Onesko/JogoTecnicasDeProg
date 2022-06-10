@@ -30,7 +30,7 @@ sf::Texture* Gerenciador_Grafico::carregarTextura(const char* caminho) {
         textura->loadFromFile(caminho);
     }
     catch(const std::exception& e){
-        printf("Deu ruim aqui\n");
+        printf("Deu ruim aqui, falha ao carregar textura\n");
         exit(1);
     }
 

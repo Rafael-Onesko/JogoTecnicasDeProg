@@ -19,6 +19,7 @@ class Fase: public Ente
 {
 protected:
 	vector<string> entidadesGeradas;
+	vector<Plataforma*> plataformas;
 	int numObstaculos;
 	const int numTotalPlataformas;
 	Jogador* player1;

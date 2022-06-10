@@ -1,6 +1,6 @@
 #include "Fase.h"
 #include "Jogo.h"
-Fase::Fase(bool doisJogadores, Gerenciador_Grafico* gerenciGrafc) :Ente(fase), numTotalPlataformas(25) {
+Fase::Fase(bool doisJogadores, Gerenciador_Grafico* gerenciGrafc) :Ente(fase), numTotalPlataformas(25), plataformas() {
     entidades = new ListaEntidades;
     player1 = new Jogador(gerenciGrafc, 0.0, 0.0, jogador1, 100);
     if (doisJogadores)
@@ -12,14 +12,6 @@ Fase::Fase(bool doisJogadores, Gerenciador_Grafico* gerenciGrafc) :Ente(fase), n
     entidades->inserir(new Plataforma(false));
     for (int i = 0; i < numTotalPlataformas; i++)
         entidadesGeradas.push_back(" ");
-   /* geraEntidades();
-    entidades->inserir(player1);
-    if(doisJogadores)
-        entidades->inserir(player2);
-    for (int i = 0; i < entidades->getTam(); i++) {
-        (*entidades)[i]->setGerenciadorGrafico(gerenciadorGrafico);
-        (*entidades)[i]->setVivo(true);
-    }*/
     tamanhoFase = numTotalPlataformas * 300.f;
     fim = false;
 }
@@ -28,6 +20,7 @@ Fase::Fase() :Ente(), numTotalPlataformas(0) {
 
 }
 Fase::~Fase() {
+    plataformas.clear();
     entidadesGeradas.clear();
     if (entidades)
         delete entidades;
@@ -72,7 +65,7 @@ void Fase::randomizarPosicoes(string entidadeCriar) {
 }
 
 void Fase::geraEntidades(vector<string>* nomesEntidades) {
-    for(int i = 0; i < nomesEntidades->size(); i++)
+    for(unsigned int i = 0; i < (nomesEntidades->size()); i++)
         randomizarPosicoes((*nomesEntidades)[i]);
     /*randomizarPosicoes("Goblin");
     randomizarPosicoes("Dragao");
@@ -88,27 +81,28 @@ void Fase::geraEntidades(vector<string>* nomesEntidades) {
         for (int j = 0; j < 4; j++) {
             Plataforma* novaPlat = new Plataforma(posicao);
             entidades->inserir(novaPlat);
+            plataformas.push_back(novaPlat);
             platAtual = Plataforma::getNumPlataformas() - 1;
             coisa = entidadesGeradas[platAtual];
             lugar = (float)platAtual * 300.f;
             complemento = (float)(rand() % 201);
             if (coisa == "Goblin") {
-                entidades->inserir(new Goblin(lugar + complemento, 550.f + (!posicao) * 50.f - 100.f, player1, player2));
+                (*entidades) += (new Goblin(lugar + complemento, 550.f + (!posicao) * 50.f - 100.f, player1, player2));
             }
             else if (coisa == "Vampiro") {
-                entidades->inserir(new Vampiro(lugar + complemento, 550.f + (!posicao) * 50.f - 100.f, player1, player2));
+                (*entidades) += (new Vampiro(lugar + complemento, 550.f + (!posicao) * 50.f - 100.f, player1, player2));
             }
             else if (coisa == "Dragao") {
-                entidades->inserir(new Dragao(lugar + complemento, 250.f + (!posicao) * 50.f, entidades, player1, player2));
+                (*entidades) += (new Dragao(lugar + complemento, 250.f + (!posicao) * 50.f, entidades, player1, player2));
             }
             else if (coisa == "Muralha") {
-                entidades->inserir(new Muralha(lugar + complemento, 550.f + (!posicao) * 50.f - 200.f));
+                (*entidades) += (new Muralha(lugar + complemento, 550.f + (!posicao) * 50.f - 200.f));
             }
             else if (coisa == "Espinho") {
-                entidades->inserir(new Espinho(lugar + complemento, 550.f + (!posicao) * 50.f - 50.f));
+                (*entidades) += (new Espinho(lugar + complemento, 550.f + (!posicao) * 50.f - 50.f));
             }
             else if (coisa == "Agua") {
-                entidades->inserir(new Agua(lugar + 150.f, 550.f + (!posicao) * 50.f));
+                (*entidades) +=(new Agua(lugar + 150.f, 550.f + (!posicao) * 50.f));
                 novaPlat->setTamX(150.f);
             }
         }

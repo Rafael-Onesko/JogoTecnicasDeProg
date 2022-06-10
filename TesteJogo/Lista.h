@@ -1,9 +1,46 @@
 #pragma once
 #include <iostream>
-#include "Elemento.h"
+//#include "Elemento.h"
 template <class TIPO>
 class Lista{
 private:
+
+	template <class TIP>
+	class Elemento
+	{
+	private:
+		TIP* pInfo;
+		Elemento<TIP>* pProx;
+		Elemento<TIP>* pAnt;
+	public:
+		Elemento() {
+			pInfo = nullptr;
+		}
+		~Elemento() {
+			if (pInfo != nullptr)
+				delete pInfo;
+			pProx = nullptr;
+			pAnt = nullptr;
+		}
+		void setpInfo(TIP* pI) {
+			pInfo = pI;
+		}
+		TIP* getpInfo() {
+			return pInfo;
+		}
+		void setpProx(Elemento <TIP>* elem) {
+			this->pProx = elem;
+		}
+		void setpAnt(Elemento <TIP>* elem) {
+			this->pAnt = elem;
+		}
+		Elemento <TIP>* getpProx() {
+			return this->pProx;
+		}
+		Elemento <TIP>* getpAnt() {
+			return this->pAnt;
+		}
+	};
 	Elemento<TIPO>* pPrimeiro;
 	Elemento<TIPO>* pUltimo;
 	int tam;

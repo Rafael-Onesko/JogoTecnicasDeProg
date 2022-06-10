@@ -6,9 +6,7 @@ Fase_Castelo::Fase_Castelo(bool doisJogadores):Fase(doisJogadores, Jogo::getGere
     entidades->inserir(player1);
     if (doisJogadores)
         entidades->inserir(player2);
-    /*else if (!jog1) {
-        player1->setId(jogador2);
-    }*/
+
     for (int i = 0; i < entidades->getTam(); i++) {
         (*entidades)[i]->setGerenciadorGrafico(gerenciadorGrafico);
         (*entidades)[i]->setVivo(true);
