@@ -1,11 +1,13 @@
 #pragma once
 #include "Fase.h"
-class Fase_Castelo : public Fase
-{
-private:
-public:
-	Fase_Castelo();
-	Fase_Castelo(bool doisJogadores);
-	~Fase_Castelo();
-};
+namespace Fases {
+	class Fase_Castelo : public Fase
+	{
+	private:
+	public:
+		Fase_Castelo();
+		Fase_Castelo(bool doisJogadores, ID idJogador);
+		~Fase_Castelo();
+	};
+}
 

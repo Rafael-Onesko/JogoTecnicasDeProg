@@ -15,28 +15,33 @@
 #include <vector>
 #include <string>
 using namespace std;
-class Fase: public Ente
-{
-protected:
-	vector<string> entidadesGeradas;
-	vector<Plataforma*> plataformas;
-	int numObstaculos;
-	const int numTotalPlataformas;
-	Jogador* player1;
-	Jogador* player2;
-	Gerenciador_Colisoes* gerenciadorColisoes;
-	ListaEntidades* entidades;
-	float tamanhoFase;
-	bool fim;
-public:
-	Fase();
-	~Fase();
-	Fase(bool doisJogadores, Gerenciador_Grafico* gerenciGrafc);
-	virtual void imprimir_se();
-	void executar(float dt);
-	void geraEntidades(vector<string>* nomesEntidades);
-	void randomizarPosicoes(string entidadeCriar);
-	const float  getTamanhoFase() const; 
-	bool  getFim() const;
-};
-
+namespace Fases {
+	class Fase : public Ente
+	{
+	protected:
+		vector<string> entidadesGeradas;
+		vector<Entidades::Obstaculos::Plataforma*> plataformas;
+		int numObstaculos;
+		const int numTotalPlataformas;
+		Entidades::Personagens::Jogador* player1;
+		Entidades::Personagens::Jogador* player2;
+		Gerenciadores::Gerenciador_Colisoes* gerenciadorColisoes;
+		Listas::ListaEntidades* entidades;
+		float tamanhoFase;
+		bool fim;
+	public:
+		Fase();
+		~Fase();
+		Fase(bool doisJogadores);
+		virtual void imprimir_se();
+		void executar(float dt);
+		void geraEntidades(vector<string>* nomesEntidades);
+		void randomizarPosicoes(string entidadeCriar);
+		const float  getTamanhoFase() const;
+		bool  getFim() const;
+		bool getJogador1Vivo() const;
+		bool getJogador2Vivo() const;
+		Entidades::Personagens::Jogador* getPlayer1() const;
+		Entidades::Personagens::Jogador* getPlayer2() const;
+	};
+}

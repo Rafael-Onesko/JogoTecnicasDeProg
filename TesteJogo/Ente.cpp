@@ -12,7 +12,7 @@ void Ente::setId(ID Id) {
 ID Ente::getId() {
 	return this->id;
 }
-void Ente::setGerenciadorGrafico(Gerenciador_Grafico* gerenciGraf) {
+void Ente::setGerenciadorGrafico(Gerenciadores::Gerenciador_Grafico* gerenciGraf) {
 	if(gerenciGraf)
 		this->gerenciadorGrafico = gerenciGraf;
 }

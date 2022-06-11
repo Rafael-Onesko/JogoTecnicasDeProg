@@ -5,14 +5,14 @@
 #include "Fase_Floresta.h"
 class Jogo {
 private:
-    static Gerenciador_Grafico* gerenciadorGrafico;
-    Fase_Floresta* faseFloresta;
-    Fase_Castelo* faseCastelo;
-    Fase* faseAtual;
+    static Gerenciadores::Gerenciador_Grafico* gerenciadorGrafico;
+    Fases::Fase_Floresta* faseFloresta;
+    Fases::Fase_Castelo* faseCastelo;
+    Fases::Fase* faseAtual;
     bool fasePrimeira;
 public:
     Jogo();
     ~Jogo();
     void executar();
-    static Gerenciador_Grafico* getGerenciadorGrafico();
+    static Gerenciadores::Gerenciador_Grafico* getGerenciadorGrafico();
 };

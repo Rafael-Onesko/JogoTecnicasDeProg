@@ -13,19 +13,21 @@ enum ID {
 	jogador2,
 	bolaDeFogo,
 	fase,
-	barraVida
+	barraVida,
+	jogador1jogador2,
+	menu
 };
 class Ente
 {
 protected:
-	Gerenciador_Grafico* gerenciadorGrafico;
+	Gerenciadores::Gerenciador_Grafico* gerenciadorGrafico;
 	ID id;
 public:
 	Ente(ID id = vazio);
 	virtual ~Ente();
 	void setId(ID id);
 	ID getId();
-	void setGerenciadorGrafico(Gerenciador_Grafico* gerenciGraf);
+	void setGerenciadorGrafico(Gerenciadores::Gerenciador_Grafico* gerenciGraf);
 	virtual void imprimir_se() = 0;
 	virtual void executar(float dt) = 0;
 };

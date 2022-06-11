@@ -1,52 +1,58 @@
 #include "Personagem.h"
+namespace Entidades {
+	namespace Personagens {
+		Personagem::Personagem(ID id, float tX, float tY, float vel) : Entidade(id, tX, tY) {
+			this->velPadrao = vel;
+			this->velocidadeX = 0;
+			this->velocidadeY = 0;
+			noChao = false;
+		}
 
-Personagem::Personagem(ID id, float tX, float tY,float vel) : Entidade(id, tX, tY) {
-	this->velPadrao = vel;
-	this->velocidadeX = 0;
-	this->velocidadeY = 0;
-	noChao = false;
-}
+		Personagem::Personagem() : Entidade() {
+			this->velPadrao = 0;
+			this->velocidadeX = 0;
+			this->velocidadeY = 0;
+			direcaoDireita = false;
+			direcaoCima = false;
+			noChao = false;
+		}
+		Personagem::~Personagem() {
 
-Personagem::Personagem() : Entidade() {
-	this->velPadrao = 0;
-	this->velocidadeX = 0;
-	this->velocidadeY = 0;
-	direcaoDireita = false;
-	direcaoCima = false;
-	noChao = false;
+		}
+		void Personagem::setVelocidadeX(float velX) {
+			this->velocidadeX = velX;
+		}
+		float Personagem::getVelocidadeX() {
+			return this->velocidadeX;
+		}
+		void Personagem::setVelocidadeY(float velY) {
+			this->velocidadeY = velY;
+		}
+		float Personagem::getVelocidadeY() {
+			return this->velocidadeY;
+		}
+		bool Personagem::getDirecaoDireita() {
+			return this->direcaoDireita;
+		}
+		bool Personagem::getDirecaoCima() {
+			return this->direcaoCima;
+		}
+		bool Personagem::getNochao() {
+			return this->noChao;
+		}
+		void Personagem::mover() {
+			posXant = posX;
+			posYant = posY;
+			this->setPosX(posX + velocidadeX);
+			this->setPosY(posY + velocidadeY);
+			if (posX < 0)
+				setPosX(0.f);
+			if (posY > gerenciadorGrafico->getAlturaJanela())
+				vivo = false;
+			else if (posY < 0.f) {
+				setPosY(0.f);
+				velocidadeY = 0;
+			}
+		}
+	}
 }
-Personagem::~Personagem() {
-
-}
-void Personagem::setVelocidadeX(float velX) {
-	this->velocidadeX = velX;
-}
-float Personagem::getVelocidadeX() {
-	return this->velocidadeX;
-}
-void Personagem::setVelocidadeY(float velY) {
-	this->velocidadeY = velY;
-}
-float Personagem::getVelocidadeY() {
-	return this->velocidadeY;
-}
-bool Personagem::getDirecaoDireita(){
-	return this->direcaoDireita;
-}
-bool Personagem::getDirecaoCima(){
-	return this->direcaoCima;
-}
-bool Personagem::getNochao() {
-	return this->noChao;
-}
-void Personagem::mover() {
-	posXant = posX;
-	posYant = posY;
-	this->setPosX(posX + velocidadeX);
-	this->setPosY(posY + velocidadeY);
-	if (posX < 0)
-		setPosX(0.f);
-	if (posY > gerenciadorGrafico->getAlturaJanela())
-		vivo = false;
-}
-

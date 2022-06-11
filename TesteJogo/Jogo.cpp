@@ -3,14 +3,14 @@
 #include <iostream>
 using namespace std;
 
-Gerenciador_Grafico* Jogo::gerenciadorGrafico = new Gerenciador_Grafico();
-Gerenciador_Grafico* Jogo::getGerenciadorGrafico() {
+Gerenciadores::Gerenciador_Grafico* Jogo::gerenciadorGrafico = new Gerenciadores::Gerenciador_Grafico();
+Gerenciadores::Gerenciador_Grafico* Jogo::getGerenciadorGrafico() {
     return gerenciadorGrafico;
 }
 Jogo::Jogo (){
     //gerenciadorGrafico = new Gerenciador_Grafico;
-    srand(time(NULL));
-    faseFloresta = new Fase_Floresta(true);
+    srand((unsigned int) time(NULL));
+    faseFloresta = new Fases::Fase_Floresta(true);
     faseCastelo = nullptr;
     fasePrimeira = true;
     executar();
@@ -28,6 +28,8 @@ void Jogo::executar(){
     //Fase_Castelo* faseProxima = nullptr;
     //Fase* faseProxima = nullptr;
     faseAtual = faseFloresta;
+    bool doisJogadores = true;
+    ID jogViv = vazio;
     while (gerenciadorGrafico->janelaAberta())
     {
 
@@ -35,15 +37,35 @@ void Jogo::executar(){
         gerenciadorGrafico->pollEvent();
 
         gerenciadorGrafico->clear();
-        if( (faseAtual) && faseAtual->getFim() == false)
+        if ((faseAtual) && faseAtual->getFim() == false) {
             faseAtual->executar(dt);
+        }
         else if(fasePrimeira) {
             if (faseAtual == faseFloresta) {
+                if (faseFloresta->getJogador1Vivo() && faseFloresta->getJogador2Vivo())
+                    jogViv = jogador1jogador2;
+
+                else if (!faseFloresta->getJogador1Vivo() && faseFloresta->getJogador2Vivo())
+                    jogViv = faseFloresta->getPlayer2()->getId();
+
+                else if (faseFloresta->getJogador1Vivo() && !faseFloresta->getJogador2Vivo())
+                    jogViv = faseFloresta->getPlayer1()->getId();
+
+                else
+                    jogViv = vazio;
+                
                 delete faseFloresta;
                 faseFloresta = nullptr;
             }
-            faseCastelo = new Fase_Castelo(true);
-            faseAtual = faseCastelo;
+            
+            if (jogViv != vazio) {
+                faseCastelo = new Fases::Fase_Castelo(doisJogadores, jogViv);
+                faseAtual = faseCastelo;
+            }
+            else {
+                faseAtual = nullptr;
+            }
+            
             fasePrimeira = false;
         }
         else {
@@ -51,8 +73,10 @@ void Jogo::executar(){
             if (faseAtual) {
                 delete faseAtual;
                 faseCastelo = nullptr;
+                faseFloresta = nullptr;
                 faseAtual = nullptr;
             }
+            //sf::Text(sf::String("Fim"), sf::Font::, )
         }
 
         gerenciadorGrafico->display();
