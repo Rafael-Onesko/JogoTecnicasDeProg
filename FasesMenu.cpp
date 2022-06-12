@@ -1,7 +1,8 @@
+
 #pragma once
-#include "MainMenu.h"
+#include "FasesMenu.h"
 #include <SFML/Graphics.hpp>
-MainMenu::MainMenu() {
+FasesMenu::FasesMenu() {
 	window = new sf::RenderWindow();
 	winclose = new sf::RectangleShape();
 	font = new sf::Font();
@@ -10,7 +11,7 @@ MainMenu::MainMenu() {
 	set_values();
 }
 
-MainMenu::~MainMenu()
+FasesMenu::~FasesMenu()
 {
 	delete window;
 	delete winclose;
@@ -20,14 +21,14 @@ MainMenu::~MainMenu()
 }
 
 
-void MainMenu::set_values()
+void FasesMenu::set_values()
 {
 	window->create(sf::VideoMode(800, 750), "Menu SFML", sf::Style::Titlebar | sf::Style::Close);
 	window->setPosition(sf::Vector2i(0, 0));
 	pos = 0;
 	pressed = theselect = false;
 	font->loadFromFile("./Data/Alkhemikal.ttf");
-	if (!font->loadFromFile("./Data/Alkhemikal.ttf")) 
+	if (!font->loadFromFile("./Data/Alkhemikal.ttf"))
 	{
 		std::cout << "Erro na fonte" << std::endl;
 	}
@@ -39,11 +40,11 @@ void MainMenu::set_values()
 	bg->setTexture(*image);
 	pos_mouse = { 0,0 };
 	mouse_coord = { 0,0 };
-	options = { "Caçadores de Monstros", "Jogar", "Como Jogar","Sobre","Ranking", "Sair"};
+	options = { "Caçadores de Monstros", "Jogar", "Como Jogar","Sobre","Ranking", "Sair" };
 	texts.resize(6);
 	coords = { {200,40},{350,100},{350,140},{350,180},{350,220},{350,260} };
 	sizes = { 40,28,24,24,24,24 };
-	for (std::size_t i{}; i < texts.size(); i++) 
+	for (std::size_t i{}; i < texts.size(); i++)
 	{
 		texts[i].setFont(*font);
 		texts[i].setString(options[i]);
@@ -56,7 +57,7 @@ void MainMenu::set_values()
 	pos = 1;
 
 }
-void MainMenu::draw_all()
+void FasesMenu::draw_all()
 {
 	window->clear();
 	window->draw(*bg);
@@ -65,36 +66,36 @@ void MainMenu::draw_all()
 	}
 	window->display();
 }
-void MainMenu::moveUp() 
+void FasesMenu::moveUp()
 {
 	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-		if (pos > 1)
-			--pos;
-		pressed = true;
-		theselect = false;
-		texts[pos].setOutlineThickness(4);
-		texts[pos].setOutlineColor(sf::Color::Red);
-		texts[pos + 1].setOutlineThickness(0);
-		draw_all();
+	if (pos > 1)
+		--pos;
+	pressed = true;
+	theselect = false;
+	texts[pos].setOutlineThickness(4);
+	texts[pos].setOutlineColor(sf::Color::Red);
+	texts[pos + 1].setOutlineThickness(0);
+	draw_all();
 	//}
 }
-void MainMenu::moveDown() 
+void FasesMenu::moveDown()
 {
 	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-		if (pos < 5)
-			++pos;
-		pressed = true;
-		theselect = false;
-		texts[pos].setOutlineThickness(4);
-		texts[pos].setOutlineColor(sf::Color::Red);
-		texts[pos - 1].setOutlineThickness(0);
-		draw_all();
+	if (pos < 5)
+		++pos;
+	pressed = true;
+	theselect = false;
+	texts[pos].setOutlineThickness(4);
+	texts[pos].setOutlineColor(sf::Color::Red);
+	texts[pos - 1].setOutlineThickness(0);
+	draw_all();
 	//}
 }
 
 
 /*
-void MainMenu::loop_events()
+void FasesMenu::loop_events()
 {
 	sf::Event event;
 	while (window->pollEvent(event)) {
@@ -135,18 +136,18 @@ void MainMenu::loop_events()
 
 
 
-void MainMenu::run_menu()
+void FasesMenu::run_menu()
 {
-	//MMactive = true;
+	MFactive = true;
 	//while (window->isOpen())
 	//{
 		//loop_events();
-		draw_all();
+	draw_all();
 	//}
 }
 
-void MainMenu::close_menu() {
-	MMactive = false;
+void FasesMenu::close_menu() {
+	MFactive = false;
 	window->close();
 }
 //virtual void executar(float dt) = 0;

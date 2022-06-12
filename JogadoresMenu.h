@@ -1,12 +1,13 @@
 #pragma once
+#pragma once
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-class MainMenu 
+class JogadoresMenu
 {
 private:
 	int pos;
-	bool pressed, theselect, MMactive;
+	bool pressed, theselect, MJactive;
 
 	//sf::RenderWindow* window;
 	sf::RectangleShape* winclose;
@@ -29,10 +30,10 @@ private:
 
 public:
 	sf::RenderWindow* window;
-	MainMenu();
-	~MainMenu();
+	JogadoresMenu();
+	~JogadoresMenu();
 	int returnPos() { return pos; }
-	bool returnState() { return MMactive; }
+	bool returnState() { return MJactive; }
 	void run_menu();
 	void moveUp();
 	void moveDown();
