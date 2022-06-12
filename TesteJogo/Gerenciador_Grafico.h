@@ -22,6 +22,8 @@ namespace Gerenciadores {
         sf::Texture* carregarTextura(const char* caminho);
         void colocaTextura(sf::Texture* text, sf::RectangleShape* corpo, int rectX = 0, int rectY = 0, float scaleX = 1.f, float scaleY = 1.f);
         void ajustarCamera(sf::RectangleShape* jogador);
+        void ajustarCameraInicio();
+        void ajustarCameraCentro(sf::RectangleShape* forma);
         const unsigned int getlarguraJanela()const;
         const unsigned int getAlturaJanela()const;
         float getCentroCameraX()const;

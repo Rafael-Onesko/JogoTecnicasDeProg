@@ -13,7 +13,7 @@ namespace Entidades {
 		}
 		void Obstaculo::colidir(ID IdOutro, float colisaoX, float colisaoY) {
 			if (IdOutro == plataforma || this->id == plataforma) {
-				if (!noChao)
+				if (!noChao && this->id != plataforma)
 					setPosY(posY - colisaoY);
 				noChao = true;
 				velocidadeY = 0;

@@ -19,6 +19,7 @@ namespace Fases {
 	class Fase : public Ente
 	{
 	protected:
+		sf::RectangleShape fundo;
 		vector<string> entidadesGeradas;
 		vector<Entidades::Obstaculos::Plataforma*> plataformas;
 		int numObstaculos;

@@ -22,22 +22,22 @@ namespace Entidades {
 		void Personagem::setVelocidadeX(float velX) {
 			this->velocidadeX = velX;
 		}
-		float Personagem::getVelocidadeX() {
+		float Personagem::getVelocidadeX()const {
 			return this->velocidadeX;
 		}
 		void Personagem::setVelocidadeY(float velY) {
 			this->velocidadeY = velY;
 		}
-		float Personagem::getVelocidadeY() {
+		float Personagem::getVelocidadeY()const {
 			return this->velocidadeY;
 		}
-		bool Personagem::getDirecaoDireita() {
+		bool Personagem::getDirecaoDireita()const {
 			return this->direcaoDireita;
 		}
-		bool Personagem::getDirecaoCima() {
+		bool Personagem::getDirecaoCima()const {
 			return this->direcaoCima;
 		}
-		bool Personagem::getNochao() {
+		bool Personagem::getNochao()const {
 			return this->noChao;
 		}
 		void Personagem::mover() {

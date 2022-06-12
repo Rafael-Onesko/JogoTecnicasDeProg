@@ -1,7 +1,7 @@
 #pragma once
 #include<SFML/Graphics.hpp>
 #include "Ente.h"
-#define GRAVIDADE 500.0f
+#define GRAVIDADE 550.0f
 
 namespace Entidades {
     class Entidade : public Ente

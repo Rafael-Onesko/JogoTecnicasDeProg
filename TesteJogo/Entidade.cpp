@@ -13,20 +13,6 @@ namespace Entidades {
 		this->tamY = tY;
 		vivo = true;
 		corpo = new sf::RectangleShape(sf::Vector2f(tX, tY));
-		if (id == jogador1)
-			corpo->setFillColor(sf::Color::Blue);
-		else if (id == goblin)
-			corpo->setFillColor(sf::Color::Cyan);
-		else if (id == vampiro)
-			corpo->setFillColor(sf::Color::Green);
-		else if (id == dragao)
-			corpo->setFillColor(sf::Color::Magenta);
-		else if (id == muralha)
-			corpo->setFillColor(sf::Color::Red);
-		else if (id == espinho)
-			corpo->setFillColor(sf::Color::Yellow);
-		else if (id == agua)
-			corpo->setFillColor(sf::Color::Blue);
 	}
 	Entidade::~Entidade() {
 		if (corpo)

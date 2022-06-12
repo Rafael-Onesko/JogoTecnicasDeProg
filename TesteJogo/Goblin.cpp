@@ -28,6 +28,10 @@ namespace Entidades {
         void Goblin::executar(float dt) {
             ajustarDeslocamento(dt);
             mover();
+            if (direcao > 0)
+                setTextura(textura, textura->getSize().x, 0, -1, 1);
+            else
+                setTextura(textura, 0, 0, 1, 1);
         }
     }
 }

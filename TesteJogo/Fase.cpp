@@ -9,6 +9,7 @@ namespace Fases {
         for (int i = 0; i < numTotalPlataformas; i++)
             entidadesGeradas.push_back(" ");
         tamanhoFase = numTotalPlataformas * 300.f;
+        fundo.setSize(sf::Vector2f(tamanhoFase + (float)gerenciadorGrafico->getlarguraJanela(), 4.f * gerenciadorGrafico->getAlturaJanela()));
         fim = false;
     }
 
@@ -26,7 +27,7 @@ namespace Fases {
 
 
     void Fase::imprimir_se() {
-
+        gerenciadorGrafico->draw(&fundo);
         for (int i = 0; i < entidades->getTam(); i++) {
             if (((*entidades)[i]->getDireita() > gerenciadorGrafico->getEsquerdaCamera()) ||
                 ((*entidades)[i]->getPosX() < gerenciadorGrafico->getDireitaCamera()))

@@ -12,6 +12,8 @@ namespace Entidades {
             posYant = pX;
             this->vidas = vidas;
             naAgua = false;
+            direcaoDireita = true;
+            
             if (id == jogador1) {
                 direita = sf::Keyboard::Right;
                 esquerda = sf::Keyboard::Left;
@@ -26,6 +28,7 @@ namespace Entidades {
                 textura = Jogo::getGerenciadorGrafico()->carregarTextura("./Assets/Guerreiro.png");
                 setTextura(textura, 0, 0, 1, 1);
             }
+            
             pontos = 0;
         }
 
@@ -144,6 +147,11 @@ namespace Entidades {
             gerenciadorGrafico->ajustarCamera(corpo);
             barraVida.executar(dt);
             pontos += dt;
+
+            if (direcaoDireita)
+                setTextura(textura, 0, 0, 1, 1);
+            else
+                setTextura(textura, textura->getSize().x, 0, -1, 1);
         }
         void Jogador::imprimir_se() {
             gerenciadorGrafico->draw(corpo);

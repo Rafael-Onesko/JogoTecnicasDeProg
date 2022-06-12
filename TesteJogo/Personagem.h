@@ -17,11 +17,11 @@ namespace Entidades {
 			virtual ~Personagem();
 			void setVelocidadeX(float velX);
 			void setVelocidadeY(float velY);
-			float getVelocidadeX();
-			float getVelocidadeY();
-			bool getDirecaoDireita();
-			bool getDirecaoCima();
-			bool getNochao();
+			float getVelocidadeX()const;
+			float getVelocidadeY()const;
+			bool getDirecaoDireita()const;
+			bool getDirecaoCima()const;
+			bool getNochao()const;
 			virtual void receberDano(int dano = 1) = 0;
 			virtual void mover();
 			virtual void ajustarDeslocamento(float dt) = 0;

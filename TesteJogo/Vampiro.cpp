@@ -65,6 +65,10 @@ namespace Entidades {
 			if (fugindo)
 				velocidadeX = 2 * velocidadeX;
 			mover();
+			if(direcao > 0)
+				setTextura(textura, textura->getSize().x, 0, -1, 1);
+			else
+				setTextura(textura, 0, 0, 1, 1);
 		}
 		float Vampiro::getAlcancePerseguir() {
 			return this->alcancePerseguir;

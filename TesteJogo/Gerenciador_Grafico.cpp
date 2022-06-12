@@ -96,13 +96,18 @@ namespace Gerenciadores {
         float centroCameraY = alturaJanela / 2.f;
         if (centroCameraX < larguraJanela / 2.f)
             centroCameraX = larguraJanela / 2.f;
-        if (jogador->getPosition().y < alturaJanela / 2.f)
-            centroCameraY = alturaJanela / 2.f + ((jogador->getPosition().y - alturaJanela / 2.f) / 4.f);
         camera->setCenter(sf::Vector2f(centroCameraX, centroCameraY));
         janela->setView(*camera);
     }
     
-    
+    void Gerenciador_Grafico::ajustarCameraInicio() {
+        camera->setCenter(sf::Vector2f(larguraJanela / 2.f, alturaJanela / 2.f));
+    }
+    void Gerenciador_Grafico::ajustarCameraCentro(sf::RectangleShape* forma) {
+        float centroCameraX = forma->getPosition().x + forma->getSize().x / 2;
+        float centroCameraY = forma->getPosition().y + forma->getSize().y / 2;
+        camera->setCenter(sf::Vector2f(centroCameraX, centroCameraY));
+    }
     
     
     const unsigned int Gerenciador_Grafico::getlarguraJanela()const {
