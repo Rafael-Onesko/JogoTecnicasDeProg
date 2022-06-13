@@ -115,6 +115,7 @@ void Jogo::executar(){
 
                 if (jogViv != vazio) {
                     faseCastelo = new Fases::Fase_Castelo(doisJogadores, jogViv);
+                    fasePrimeira = false;
                     faseAtual = faseCastelo;
                 }
                 else {
