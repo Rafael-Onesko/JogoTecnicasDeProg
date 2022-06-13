@@ -80,7 +80,7 @@ void Menu::set_values()
 void Menu::adicionaJogada(int pontuacao, int jogada) {
 	if(rankingTexto.size() < 6)
 		rankingTexto.push_back("Jogada  " + std::to_string(jogada) + "       " + std::to_string(pontuacao) + " \n");
-}
+}	
 
 void Menu::loop_events()
 {
@@ -147,6 +147,8 @@ void Menu::addRanking() {
 		texto.setString(rankingTexto[i]);
 		texto.setCharacterSize(30);
 		texto.setOutlineColor(sf::Color::White);
+		texto.setOutlineThickness(4);
+		texto.setOutlineColor(sf::Color::Red);
 		texto.setPosition(sf::Vector2f(coords[i].x, 350.f + i * 30.f));
 		texts.push_back(texto);
 	}
