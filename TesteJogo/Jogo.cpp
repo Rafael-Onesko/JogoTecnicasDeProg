@@ -7,6 +7,7 @@ Gerenciadores::Gerenciador_Grafico* Jogo::gerenciadorGrafico = new Gerenciadores
 Gerenciadores::Gerenciador_Grafico* Jogo::getGerenciadorGrafico() {
     return gerenciadorGrafico;
 }
+
 Jogo::Jogo (){
     menu = new Menu();
 
@@ -16,6 +17,7 @@ Jogo::Jogo (){
     doisJogadores = true;
     executar();
 }
+
 Jogo::~Jogo(){
     if (menu)
         delete menu;
@@ -52,6 +54,7 @@ void Jogo::recebeMenu() {
     default:
         break;
     }
+    menu->limpar();
 }
 
 void Jogo::inicializaFases() {
@@ -73,6 +76,8 @@ void Jogo::executar(){
     
     ID jogViv = ID::vazio;
     inicializado = false;
+    int jogada = 0;
+    float pontuacao = 0;
     while (gerenciadorGrafico->janelaAberta())
     {
         float dt = dt_clock.restart().asSeconds();
@@ -88,6 +93,7 @@ void Jogo::executar(){
             }
             if ((faseAtual) && faseAtual->getFim() == false) {
                 faseAtual->executar(dt);
+                pontuacao += dt;
             }
             else if (fasePrimeira) {
                 if (faseAtual == faseFloresta) {
@@ -111,12 +117,24 @@ void Jogo::executar(){
                     faseCastelo = new Fases::Fase_Castelo(doisJogadores, jogViv);
                     faseAtual = faseCastelo;
                 }
-                else 
+                else {
                     faseAtual = nullptr;
-                fasePrimeira = false;
+                    fasePrimeira = false;
+                }
             }
             else {
-                getGerenciadorGrafico()->fechaJanela();
+                if (faseCastelo) {
+                    delete faseCastelo;
+                    faseCastelo = nullptr;
+                }
+                if (inicializado) {
+                    jogada++;
+                    menu->adicionaJogada((int)pontuacao, jogada);
+                    faseAtual = nullptr;
+                    menu->set_values();
+                    inicializado = false;
+                }
+                menu->executar(0);
             }
         }
         gerenciadorGrafico->display();

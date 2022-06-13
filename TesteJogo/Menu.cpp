@@ -1,11 +1,13 @@
 #include "Menu.h"
 #include "Jogo.h"
 #include <iostream>
+#include <string>
 Menu::Menu():Ente(menu) {
 
 	font = new sf::Font();
-	bg = new sf::RectangleShape(sf::Vector2f((float)Jogo::getGerenciadorGrafico()->getAlturaJanela(), (float)Jogo::getGerenciadorGrafico()->getlarguraJanela()));
-	
+	bg = new sf::RectangleShape(sf::Vector2f(800.f, 750.f));
+	ranking = false;
+
 	set_values();
 }
 
@@ -21,14 +23,24 @@ Menu::~Menu()
 	coords.clear();
 	texts.clear();
 	sizes.clear();
+	rankingTexto.clear();
 }
 
+void Menu::limpar() {
+	options.clear();
+	coords.clear();
+	texts.clear();
+	sizes.clear();
+}
 
 void Menu::set_values()
 {
 	pos = 0;
 	pressed = theselect = false;
 	botaoClicado = nenhum;
+
+	bg->setPosition(sf::Vector2f(Jogo::getGerenciadorGrafico()->getEsquerdaCamera(),0.f));
+	bg->setSize(sf::Vector2f((float)Jogo::getGerenciadorGrafico()->getAlturaJanela(), (float)Jogo::getGerenciadorGrafico()->getlarguraJanela()));
 
 	if (!font->loadFromFile("./Data/Alkhemikal.ttf"))
 	{
@@ -42,9 +54,10 @@ void Menu::set_values()
 	options = { "Caçadores de Monstros",  "Um Jogador, Primeira fase", "Dois Jogadores, Primeira fase", 
 		"Um Jogador, Segunda fase","Dois Jogadores, Segunda fase" ,"Ranking", "Sair" };
 
-	coords = { {200,40},{250,100},{250,140},{250,180},{250,220},{250,260}, {250,300} };
+	float x = bg->getPosition().x;
+	coords = { {200.f + x,40.f},{250.f + x,100.f},{250.f + x,140.f},{250.f + x,180.f},{250.f + x,220.f},{350.f + x,260.f}, {350.f + x,300.f} };
 	sizes = { 40,28,24,24,24,24,24 };
-	for (int i = 0; i < 7; i++)
+	for (unsigned int i = 0; i < sizes.size(); i++)
 	{
 		sf::Text texto;
 		texto.setFont(*font);
@@ -54,10 +67,19 @@ void Menu::set_values()
 		texto.setPosition(coords[i]);
 		texts.push_back(texto);
 	}
-	texts[1].setOutlineThickness(4);
-	texts[1].setOutlineColor(sf::Color::Red);
-	pos = 1;
+	if (!ranking) {
+		pos = 1;
+	}
+	else {
+		pos = 5;
+	}
+	texts[pos].setOutlineThickness(4);
+	texts[pos].setOutlineColor(sf::Color::Red);
+}
 
+void Menu::adicionaJogada(int pontuacao, int jogada) {
+	if(rankingTexto.size() < 6)
+		rankingTexto.push_back("Jogada  " + std::to_string(jogada) + "       " + std::to_string(pontuacao) + " \n");
 }
 
 void Menu::loop_events()
@@ -96,16 +118,17 @@ void Menu::loop_events()
 			botaoClicado = fase2jogador1;
 		else if (options[pos] == "Dois Jogadores, Segunda fase")
 			botaoClicado = fase2jogador2;
+		else if (options[pos] == "Ranking") {
+			ranking = true;
+			botaoClicado = nenhum;
+		}
 		theselect = true;
 	}
 	else {
 		pressed = false;
 	}
-
-
-
-
 }
+
 
 void Menu::imprimir_se()
 {
@@ -114,11 +137,34 @@ void Menu::imprimir_se()
 		Jogo::getGerenciadorGrafico()->draw(&texts[i]);
 	}
 }
+
+void Menu::addRanking() {
+
+	for (unsigned int i = 0; i < rankingTexto.size(); i++)
+	{
+		sf::Text texto;
+		texto.setFont(*font);
+		texto.setString(rankingTexto[i]);
+		texto.setCharacterSize(30);
+		texto.setOutlineColor(sf::Color::White);
+		texto.setPosition(sf::Vector2f(coords[i].x, 350.f + i * 30.f));
+		texts.push_back(texto);
+	}
+}
+
 void Menu::executar(float dt)
 {
+	Jogo::getGerenciadorGrafico()->ajustarCameraInicio();
 	loop_events();
 	imprimir_se();
+	if (ranking) {
+		botaoClicado = nenhum;
+		addRanking();
+		ranking = false;
+	}
 }
+
+
 botao Menu::getBotaoClicado() const{
 	return botaoClicado;
 }

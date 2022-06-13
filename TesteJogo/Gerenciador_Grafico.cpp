@@ -101,7 +101,7 @@ namespace Gerenciadores {
     }
     
     void Gerenciador_Grafico::ajustarCameraInicio() {
-        camera->setCenter(sf::Vector2f(larguraJanela / 2.f, alturaJanela / 2.f));
+        camera->setCenter(sf::Vector2f((float)larguraJanela / 2.f, (float)alturaJanela / 2.f));
     }
     void Gerenciador_Grafico::ajustarCameraCentro(sf::RectangleShape* forma) {
         float centroCameraX = forma->getPosition().x + forma->getSize().x / 2;

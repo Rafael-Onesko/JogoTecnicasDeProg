@@ -23,7 +23,7 @@ namespace Fases {
         }
 
         gerenciadorGrafico->colocaTextura(gerenciadorGrafico->carregarTextura("./Assets/bg.png"), &fundo);
-        
+
         for (int i = 0; i < entidades->getTam(); i++) {
             (*entidades)[i]->setGerenciadorGrafico(gerenciadorGrafico);
             (*entidades)[i]->setVivo(true);
